@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Accommodation.belongsTo(models.User, { foreignKey: "AuthorId" });
+      Accommodation.belongsToMany(models.User, {
+        through: "SaveAccommodations",
+      });
     }
   }
   Accommodation.init(
