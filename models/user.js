@@ -12,20 +12,79 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.belongsTo(models.Accommodation, { foreignKey: "AuthorId" });
-      Usre.belongsToMany(models.Accommodation, {
+      User.belongsToMany(models.Accommodation, {
         through: "SaveAccommodations",
       });
     }
   }
   User.init(
     {
-      fullname: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
+      fullname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Fullname is required",
+          },
+          notEmpty: {
+            msg: "Fullname is required",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: {
+            msg: "This should be an Email format",
+          },
+          notNull: {
+            msg: "Email is required",
+          },
+          notEmpty: {
+            msg: "Email is required",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Password is required",
+          },
+          notEmpty: {
+            msg: "Password is required",
+          },
+        },
+      },
       phonenumber: DataTypes.STRING,
-      address: DataTypes.STRING,
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Address is required",
+          },
+          notEmpty: {
+            msg: "Address is required",
+          },
+        },
+      },
       role: DataTypes.STRING,
-      zipCode: DataTypes.STRING,
+      zipCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Zip code is required",
+          },
+          notEmpty: {
+            msg: "Zip code is required",
+          },
+        },
+      },
     },
     {
       sequelize,

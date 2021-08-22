@@ -19,17 +19,17 @@ module.exports = {
         AuthorId: 2,
         description: "Full furnished",
         price: 2500000,
-        status: "rent", //rent, active
+        status: "rented", //rent, active
         zipCode: "16453",
         type: "house", //house, apartement
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     ];
-    await queryInterface.bulkInsert("Accommodations", data, {});
+    await queryInterface.bulkInsert("Accommodation", data, {});
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete("Accommodations", null, {});
+    await queryInterface.bulkDelete("Accommodation", null, {});
   },
 };
