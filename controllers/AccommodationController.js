@@ -8,7 +8,7 @@ class AccommodationController {
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 
@@ -22,7 +22,7 @@ class AccommodationController {
         throw { name: "AccommodationNotFound" };
       }
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 
