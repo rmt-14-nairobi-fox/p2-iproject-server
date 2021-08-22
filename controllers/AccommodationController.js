@@ -33,18 +33,18 @@ class AccommodationController {
       description: req.body.description,
       price: +req.body.price,
       status: req.body.status || "active",
-      zipCode: req.body.status,
-      long: "",
-      lat: "",
+      zipCode: req.body.zipCode,
+      long: null,
+      lat: null,
       imageUrl: "",
-      type: req.body.status,
+      type: req.body.type,
     };
     try {
       const createdAccommodation = await Accommodation.create(data);
 
       res.status(201).json(createdAccommodation);
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 }

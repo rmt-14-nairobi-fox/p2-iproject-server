@@ -39,8 +39,7 @@ async function imgKitCreate(req, res, next) {
             })
             .then((data) => {
               req.body.imageUrl = data.data.url;
-              console.log(data);
-              //   next();
+              next();
             })
             .catch((err) => {
               next(err);
@@ -52,8 +51,7 @@ async function imgKitCreate(req, res, next) {
         throw { name: "WrongTypeFile" };
       }
     } catch (err) {
-      console.log(err);
-      //   next(err);
+      next(err);
     }
   }
 }
