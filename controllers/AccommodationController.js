@@ -103,6 +103,34 @@ class AccommodationController {
       next(err);
     }
   }
+
+  // ! PUBLIC
+  static async getAllPublic(req, res, next) {
+    try {
+      const accommodationsData = await Accommodation.findAll({
+        order: [["createdAt", "DESC"]],
+        include: { model: User, attributes: { exclude: ["password"] } },
+      });
+      res.status(200).json(accommodationsData);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getByIdPublic(req, res, next) {
+    const id = +req.params.id;
+    try {
+      const accommodationData = await Accommodation.findByPk(id);
+
+      if (accommodationData) {
+        res.status(200).json(accommodationData);
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 module.exports = AccommodationController;

@@ -1,7 +1,7 @@
 const { SaveAccommodation, Accommodation, User } = require("../models");
 
 class SaveAccommodationController {
-  static async getAll(req, res, next) {
+  static async getAllSave(req, res, next) {
     try {
       const savedData = await SaveAccommodation.findAll({
         order: [["createdAt", "DESC"]],
@@ -27,6 +27,23 @@ class SaveAccommodationController {
     try {
       const saveAccommodation = await SaveAccommodation.create(data);
       res.status(201).json(saveAccommodation);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async unsave(req, res, next) {
+    const id = +req.params.id;
+    try {
+      const foundSaved = await SaveAccommodation.findByPk(id);
+      if (foundSaved) {
+        const saveAccommodation = await SaveAccommodation.destroy({
+          where: { id },
+        });
+        res.status(200).json({ message: "Save accommodation has been remove" });
+      } else {
+        throw { name: "SaveNotFound" };
+      }
     } catch (err) {
       next(err);
     }
