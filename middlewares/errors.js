@@ -2,9 +2,9 @@ async function errorHandler(err, req, res, next) {
   let code = err.code || 500;
   let message = "Internal server error";
 
-  if (err.name === "AccommodationNotFound") {
+  if (err.name === "AccommodationNotFound" || err.name === "SaveNotFound") {
     code = 404;
-    message = { message: ["Accommodation not found"] };
+    message = { message: ["Item/s not found"] };
   } else if (err.name === "SequelizeValidationError") {
     code = 400;
     const errMap = err.errors.map((el) => {

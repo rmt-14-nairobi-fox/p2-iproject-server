@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt");
-const { User, Accommodation } = require("../models");
+const { User, Accommodation, SaveAccommodation } = require("../models");
 
 async function auth(req, res, next) {
   const { access_token: accessToken } = req.headers;
@@ -22,6 +22,7 @@ async function auth(req, res, next) {
       throw { name: "NoToken" };
     }
   } catch (err) {
+    console.log(err);
     next(err);
   }
 }
@@ -41,10 +42,43 @@ async function authZOwner(req, res, next) {
       } else {
         throw { name: "AccommodationNotFound" };
       }
+    } else {
+      throw { name: "UserVerify" };
     }
   } catch (err) {
     next(err);
   }
 }
 
-module.exports = { auth, authZOwner };
+async function authZCustomer(req, res, next) {
+  try {
+    if (req.user.role === "customer") {
+      next();
+    } else {
+      throw { name: "UserVerify" };
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+async function authZCustomer(req, res, next) {
+  const paramsId = +req.params.id;
+
+  try {
+    const foundSaved = await SaveAccommodation.findByPk(paramsId);
+    if (paramsId) {
+      if (foundSaved.UserId === +req.user.id) {
+        next();
+      } else {
+        throw { name: "UserVerify" };
+      }
+    } else {
+      throw { name: "AccommodationNotFound" };
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { auth, authZOwner, authZCustomer };

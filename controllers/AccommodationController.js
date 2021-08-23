@@ -1,4 +1,4 @@
-const { Accommodation } = require("../models");
+const { Accommodation, User } = require("../models");
 
 class AccommodationController {
   static async getAll(req, res, next) {
@@ -8,6 +8,7 @@ class AccommodationController {
           AuthorId: +req.user.id,
         },
         order: [["createdAt", "DESC"]],
+        include: { model: User, attributes: { exclude: ["password"] } },
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
@@ -34,7 +35,7 @@ class AccommodationController {
     const data = {
       title: req.body.title,
       address: req.body.address,
-      AuthorId: "" || 1,
+      AuthorId: +req.user.id,
       description: req.body.description,
       price: +req.body.price,
       status: req.body.status || "active",
@@ -58,7 +59,7 @@ class AccommodationController {
     const data = {
       title: req.body.title,
       address: req.body.address,
-      // AuthorId: "" || 1,
+      AuthorId: +req.user.id,
       description: req.body.description,
       price: +req.body.price,
       status: req.body.status || "active",
@@ -95,6 +96,34 @@ class AccommodationController {
           where: { id: id },
         });
         res.status(200).json({ message: `${dataDelete} success to delete` });
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  // ! PUBLIC
+  static async getAllPublic(req, res, next) {
+    try {
+      const accommodationsData = await Accommodation.findAll({
+        order: [["createdAt", "DESC"]],
+        include: { model: User, attributes: { exclude: ["password"] } },
+      });
+      res.status(200).json(accommodationsData);
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async getByIdPublic(req, res, next) {
+    const id = +req.params.id;
+    try {
+      const accommodationData = await Accommodation.findByPk(id);
+
+      if (accommodationData) {
+        res.status(200).json(accommodationData);
       } else {
         throw { name: "AccommodationNotFound" };
       }
