@@ -40,7 +40,7 @@ class Controller {
       });
 
       if (find) {
-        const { id, password: hashedPassword } = find;
+        const { id, name, password: hashedPassword, imgUrl } = find;
 
         if (checkPassword(password, hashedPassword)) {
           const payload = {
@@ -49,7 +49,7 @@ class Controller {
           };
 
           const access_token = generateToken(payload);
-          res.status(200).json({ access_token });
+          res.status(200).json({ access_token, name, imgUrl });
         } else {
           const error = new Error();
           error.name = 'Unauthorized';
@@ -70,7 +70,30 @@ class Controller {
     }
   }
 
-  static async edit(req, res, next) {}
+  static async edit(req, res, next) {
+    try {
+      const imgUrl = req.imgUrl || null;
+      const name = req.body.name || null;
+      const id = req.user.id;
+
+      const payload = {
+        name,
+      };
+
+      if (imgUrl) payload.imgUrl = imgUrl;
+
+      await User.update(payload, {
+        where: {
+          id,
+        },
+      });
+
+      res.status(200).json({ message: 'Profile updated' });
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;

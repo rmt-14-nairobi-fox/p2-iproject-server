@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Controller = require('../controllers/users');
 const upload = require('../config/multer');
 const imagekit = require('../middlewares/imagekit');
+const authentication = require('../middlewares/authentication');
 
 router.post(
   '/register',
@@ -12,6 +13,13 @@ router.post(
 
 router.post('/login', Controller.login);
 
-router.put('/edit', Controller.edit);
+router.use(authentication);
+
+router.patch(
+  '/edit',
+  upload.single('profile-image'),
+  imagekit,
+  Controller.edit
+);
 
 module.exports = router;
