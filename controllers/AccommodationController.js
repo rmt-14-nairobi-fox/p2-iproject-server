@@ -28,6 +28,7 @@ class AccommodationController {
 
   static async create(req, res, next) {
     const data = {
+      title: req.body.title,
       address: req.body.address,
       AuthorId: "" || 1,
       description: req.body.description,
@@ -51,6 +52,7 @@ class AccommodationController {
   static async update(req, res, next) {
     const id = +req.params.id;
     const data = {
+      title: req.body.title,
       address: req.body.address,
       // AuthorId: "" || 1,
       description: req.body.description,

@@ -4,7 +4,7 @@ async function errorHandler(err, req, res, next) {
 
   if (err.name === "AccommodationNotFound") {
     code = 404;
-    message = "Accommodation not found";
+    message = { message: ["Accommodation not found"] };
   } else if (err.name === "SequelizeValidationError") {
     code = 400;
     const errMap = err.errors.map((el) => {
@@ -13,10 +13,13 @@ async function errorHandler(err, req, res, next) {
     message = { message: errMap };
   } else if (err.name === "FileIsBig") {
     code = 400;
-    message = "Image filesize should be less than 255kb";
+    message = { message: ["Image filesize should be less than 255kb"] };
   } else if (err.name === "WrongTypeFile") {
     code = 400;
-    message = "Image type file should be .jpg, .jpeg or .png";
+    message = { message: ["Image type file should be .jpg, .jpeg or .png"] };
+  } else if (err.name === "SequelizeUniqueConstraintError") {
+    code = 400;
+    message = { message: [`Email is already registered`] };
   }
 
   res.status(code).json(message);
