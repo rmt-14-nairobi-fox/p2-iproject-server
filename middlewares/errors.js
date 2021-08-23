@@ -29,6 +29,9 @@ async function errorHandler(err, req, res, next) {
   } else if (err.name === "UserVerify") {
     code = 403;
     message = { message: ["Forbidden to access"] };
+  } else if (err.name === "NoToken") {
+    code = 401;
+    message = { message: ["You do not have the access"] };
   }
 
   res.status(code).json(message);
