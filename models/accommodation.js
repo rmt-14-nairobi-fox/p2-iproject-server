@@ -13,6 +13,12 @@ module.exports = (sequelize, DataTypes) => {
       Accommodation.belongsToMany(models.User, {
         through: "SaveAccommodations",
       });
+      Accommodation.belongsToMany(models.Facility, {
+        through: "AccommodationFacilities",
+      });
+      Accommodation.belongsToMany(models.User, {
+        through: "Visits",
+      });
     }
   }
   Accommodation.init(
