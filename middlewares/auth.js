@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt");
-const { User } = require("../models");
+const { User, Accommodation } = require("../models");
 
 async function auth(req, res, next) {
   const { access_token: accessToken } = req.headers;
@@ -26,4 +26,25 @@ async function auth(req, res, next) {
   }
 }
 
-module.exports = { auth };
+async function authZOwner(req, res, next) {
+  const paramsId = +req.params.id;
+
+  try {
+    if (req.user.role === "owner") {
+      const foundAccommodation = await Accommodation.findByPk(paramsId);
+      if (foundAccommodation) {
+        if (foundAccommodation.AuthorId === +req.user.id) {
+          next();
+        } else {
+          throw { name: "UserVerify" };
+        }
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { auth, authZOwner };

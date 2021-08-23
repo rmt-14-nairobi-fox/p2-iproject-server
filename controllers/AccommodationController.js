@@ -4,6 +4,9 @@ class AccommodationController {
   static async getAll(req, res, next) {
     try {
       const accommodationsData = await Accommodation.findAll({
+        where: {
+          AuthorId: +req.user.id,
+        },
         order: [["createdAt", "DESC"]],
       });
       res.status(200).json(accommodationsData);
@@ -16,6 +19,7 @@ class AccommodationController {
     const id = +req.params.id;
     try {
       const accommodationData = await Accommodation.findByPk(id);
+
       if (accommodationData) {
         res.status(200).json(accommodationData);
       } else {
@@ -37,7 +41,7 @@ class AccommodationController {
       zipCode: req.body.zipCode,
       long: null,
       lat: null,
-      imageUrl: "",
+      imageUrl: req.body.imageUrl,
       type: req.body.type,
     };
     try {
