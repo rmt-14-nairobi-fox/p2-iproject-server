@@ -20,6 +20,15 @@ async function errorHandler(err, req, res, next) {
   } else if (err.name === "SequelizeUniqueConstraintError") {
     code = 400;
     message = { message: [`Email is already registered`] };
+  } else if (err.name === "UserPasswordError") {
+    code = 401;
+    message = { message: ["Email / password is wrong"] };
+  } else if (err.name === "UserNotFound") {
+    code = 404;
+    message = { message: ["User not found"] };
+  } else if (err.name === "UserVerify") {
+    code = 403;
+    message = { message: ["Forbidden to access"] };
   }
 
   res.status(code).json(message);

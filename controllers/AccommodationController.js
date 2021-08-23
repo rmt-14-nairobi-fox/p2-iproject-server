@@ -64,7 +64,6 @@ class AccommodationController {
       // imageUrl: "",
       type: req.body.type,
     };
-    console.log(data, "<<<<<<<");
     try {
       const foundAccommodation = await Accommodation.findByPk(id);
       if (foundAccommodation) {
