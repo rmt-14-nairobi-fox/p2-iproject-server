@@ -17,16 +17,83 @@ module.exports = (sequelize, DataTypes) => {
   }
   Accommodation.init(
     {
-      address: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Title is required",
+          },
+          notEmpty: {
+            msg: "Title is required",
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Address is required",
+          },
+          notEmpty: {
+            msg: "Address is required",
+          },
+        },
+      },
       AuthorId: DataTypes.INTEGER,
-      description: DataTypes.STRING,
-      price: DataTypes.INTEGER,
-      status: DataTypes.INTEGER,
-      zipCode: DataTypes.STRING,
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Description is required",
+          },
+          notEmpty: {
+            msg: "Description is required",
+          },
+        },
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Price is required",
+          },
+          notEmpty: {
+            msg: "Price is required",
+          },
+        },
+      },
+      status: DataTypes.STRING,
+      zipCode: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Zip code is required",
+          },
+          notEmpty: {
+            msg: "Zip code is required",
+          },
+        },
+      },
       long: DataTypes.FLOAT,
       lat: DataTypes.FLOAT,
       imageUrl: DataTypes.STRING,
-      type: DataTypes.STRING,
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Type is required",
+          },
+          notEmpty: {
+            msg: "Type is required",
+          },
+        },
+      },
     },
     {
       sequelize,

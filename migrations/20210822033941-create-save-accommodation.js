@@ -20,7 +20,7 @@ module.exports = {
       AccommodationId: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Accommodations",
+          model: "Accommodation",
           key: "id",
         },
         onUpdate: "cascade",
