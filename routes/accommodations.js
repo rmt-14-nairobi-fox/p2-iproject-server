@@ -17,4 +17,9 @@ router.post(
   AccommodationController.create
 );
 
+// will have middleware for imagekit
+router.put("/:id", AccommodationController.update);
+
+router.delete("/:id", AccommodationController.delete);
+
 module.exports = router;

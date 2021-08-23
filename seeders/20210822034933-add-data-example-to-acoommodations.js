@@ -4,6 +4,7 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const data = [
       {
+        title: "Good House",
         address: "Jalan Bontang IV",
         AuthorId: 1,
         description: "Full furnished",
@@ -15,6 +16,7 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
+        title: "Good clean House",
         address: "Jalan Pekapuran",
         AuthorId: 2,
         description: "Full furnished",
