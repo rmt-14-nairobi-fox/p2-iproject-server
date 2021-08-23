@@ -8,6 +8,6 @@
 
 - coba ganti long, lat, imageUrl allowNull ditambahin at moment null because of no geolocation
 
-- imagekit make m-m ?
+- imagekit make m-m ? pake email katamune
 
 -m

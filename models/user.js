@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(models.Accommodation, { foreignKey: "AuthorId" });
+      User.hasMany(models.Accommodation, { foreignKey: "AuthorId" });
       User.belongsToMany(models.Accommodation, {
         through: "SaveAccommodations",
       });
@@ -92,6 +92,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   User.beforeCreate((data, opt) => {
+    data.password = hashPassword(data.password);
+  });
+
+  User.beforeUpdate((data, opt) => {
     data.password = hashPassword(data.password);
   });
   return User;
