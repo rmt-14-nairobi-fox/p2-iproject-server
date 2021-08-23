@@ -12,10 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       SavedNews.belongsTo(models.User, {
         foreignKey: 'user_id',
       });
-      SavedNews.belongsToMany(models.User, {
-        through: models.Post,
-        foreignKey: 'savedNews_id',
-      });
     }
   }
   SavedNews.init(
