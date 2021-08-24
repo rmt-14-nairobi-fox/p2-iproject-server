@@ -9,7 +9,7 @@ module.exports = {
         AuthorId: 1,
         description: "Full furnished",
         price: 2000000,
-        status: "active", //rent, active
+        status: "active", //inactive, active
         zipCode: "16457",
         type: "house", //house, apartement
         createdAt: new Date(),
@@ -21,7 +21,7 @@ module.exports = {
         AuthorId: 2,
         description: "Full furnished",
         price: 2500000,
-        status: "rented", //rent, active
+        status: "inactive", //inactive, active
         zipCode: "16453",
         type: "house", //house, apartement
         createdAt: new Date(),
