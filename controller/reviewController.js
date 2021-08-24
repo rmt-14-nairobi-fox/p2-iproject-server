@@ -11,10 +11,9 @@ class reviewController {
           },
         ],
       });
-
       res.status(200).json(result);
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
   static async myReview(req, res, next) {
@@ -31,7 +30,7 @@ class reviewController {
       });
       res.status(200).json(result);
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
   static async reviewCreate(req, res, next) {
@@ -52,7 +51,7 @@ class reviewController {
       const result = await Review.create(payload);
       res.status(200).json(result);
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
   static async updateReview(req, res, next) {
@@ -88,7 +87,7 @@ class reviewController {
         throw { name: "NotFound" };
       }
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 }
