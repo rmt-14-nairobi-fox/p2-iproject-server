@@ -15,7 +15,7 @@ module.exports = async function (req, res, next) {
       } else {
         const error = new Error();
         error.name = 'Forbidden';
-        error.message = 'You are not allowed to edit this post';
+        error.message = 'You are not allowed to modify this post';
 
         throw error;
       }

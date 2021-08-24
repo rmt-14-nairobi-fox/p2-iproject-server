@@ -63,6 +63,25 @@ class Controller {
       next(err);
     }
   }
+
+  static async deletePost(req, res, next) {
+    try {
+      const user_id = req.user.id;
+      const post_id = req.params.postId;
+
+      await Post.destroy({
+        where: {
+          id: post_id,
+          user_id,
+        },
+      });
+
+      res.status(200).json({ message: 'Post deleted' });
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;

@@ -17,4 +17,6 @@ router.put(
   Controller.editPost
 );
 
+router.delete('/:postId', editPostAuthorization, Controller.deletePost);
+
 module.exports = router;
