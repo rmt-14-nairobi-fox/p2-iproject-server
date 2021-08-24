@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,18 +10,98 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  User.init({
-    fullName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
-    address: DataTypes.STRING,
-    imgUser: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'User',
-  });
+  }
+  User.init(
+    {
+      fullName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "name is required",
+          },
+          notEmpty: {
+            msg: "name is required",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "email is already exists",
+        },
+        validate: {
+          isEmail: {
+            msg: "must be email format",
+          },
+          notNull: {
+            msg: "email is required",
+          },
+          notEmpty: {
+            msg: "email is required",
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "phone number is required",
+          },
+          notEmpty: {
+            msg: "phone number is required",
+          },
+        },
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: {
+          msg: "username is already exists",
+        },
+        validate: {
+          notNull: {
+            msg: "username is required",
+          },
+          notEmpty: {
+            msg: "username is required",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "password is required",
+          },
+          notEmpty: {
+            msg: "password is required",
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "address is required",
+          },
+          notEmpty: {
+            msg: "address is required",
+          },
+        },
+      },
+      imgUser: {
+        type: DataTypes.STRING,
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+    }
+  );
   return User;
 };
