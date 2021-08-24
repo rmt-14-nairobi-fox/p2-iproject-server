@@ -65,6 +65,10 @@ module.exports = (sequelize, DataTypes) => {
       notEmpty:{
         msg:"phoneNumber cannot be Empty"
       },
+    },
+    role: {
+      type:DataTypes.STRING,
+      allowNull:false,
     }
   }, {
     hooks:{
