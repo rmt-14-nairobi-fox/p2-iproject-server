@@ -32,6 +32,13 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      status: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      admin: {
+        type: Sequelize.STRING
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

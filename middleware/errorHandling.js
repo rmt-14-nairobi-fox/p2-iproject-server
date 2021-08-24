@@ -11,6 +11,14 @@ function errorHandling(err, req, res, next) {
         code = 400;
         err.errors.forEach(error => msg.push(error.message));
 
+    } else if (err.name === 'InvalidToken') {
+        code = 401;
+        msg.push(err.msg)
+
+    } else if (err.name === 'Forbidden') {
+        code = 403;
+        message.push(err.message);
+
     } else {
         code = 500;
         msg.push('Internal server error');

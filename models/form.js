@@ -51,7 +51,20 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'request cannot be empty'
         }
       }
-    }
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'status cannot be empty'
+        },
+        notNull: {
+          msg: 'status cannot be empty'
+        }
+      }
+    },
+    admin: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Form',
