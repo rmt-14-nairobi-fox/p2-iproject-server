@@ -1,3 +1,4 @@
+const getRpPrice = require("../helpers/getRpPrice");
 const { Accommodation, User } = require("../models");
 
 class AccommodationController {
@@ -9,6 +10,9 @@ class AccommodationController {
         },
         order: [["createdAt", "DESC"]],
         include: { model: User, attributes: { exclude: ["password"] } },
+      });
+      accommodationsData.forEach((el) => {
+        el.price = getRpPrice(el.price);
       });
       res.status(200).json(accommodationsData);
     } catch (err) {

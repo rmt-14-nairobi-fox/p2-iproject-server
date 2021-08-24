@@ -10,4 +10,4 @@
 
 - Image sama facility nanti aja
 
-- tambah authz for image
+- city sama country
