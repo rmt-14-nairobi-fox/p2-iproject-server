@@ -43,10 +43,6 @@ class AccommodationController {
       imageUrl: req.body.imageUrl,
       type: req.body.type,
     };
-
-    // const test = await geocode(data.address + " " + data.zipCode);
-    // console.log(test);
-    // res.send(test);
     try {
       const createdAccommodation = await Accommodation.create(data);
 
