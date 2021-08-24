@@ -11,9 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      StudentClass.belongsTo(models.Class, { foreignKey: 'ClassId' })
+      StudentClass.belongsTo(models.Student, { foreignKey: 'StudentId' })
     }
   };
   StudentClass.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false
+    },
     ClassId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -116,24 +124,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     note: DataTypes.STRING
   }, {
-    hooks: {
-      beforeValidate: studentClass => {
-        studentClass.totalScore = studentClass.score1 + studentClass.score2 + studentClass.score3 + studentClass.score4 + studentClass.score5
-        if (studentClass.totalScore >= 90 && studentClass.totalScore <= 100) {
-          studentClass.predikat = 'A'
-        } else if (studentClass.totalScore >= 80 && studentClass.totalScore <= 89) {
-          studentClass.predikat = 'B'
-        } else if (studentClass.totalScore >= 70 && studentClass.totalScore <= 79) {
-          studentClass.predikat = 'C'
-        } else if (studentClass.totalScore >= 60 && studentClass.totalScore <= 69) {
-          studentClass.predikat = 'D'
-        } else if (studentClass.totalScore >= 50 && studentClass.totalScore <= 59) {
-          studentClass.predikat = 'E'
-        } else {
-          studentClass.predikat = 'F'
-        }
-      }
-    },
     sequelize,
     modelName: 'StudentClass',
   });

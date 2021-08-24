@@ -51,6 +51,7 @@ class StudentController {
                     score4: 0,
                     score5: 0,
                     totalScore: 0,
+                    predikat: '-',
                     status: 'waiting'
                 }
                 await StudentClass.create(newStudentClass)
