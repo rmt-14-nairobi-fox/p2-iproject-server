@@ -10,8 +10,7 @@ class UserController{
             email : req.body.email,
             password : req.body.password,
             role : "admin",
-            phoneNumber : req.body.phoneNumber,
-            address : req.body.address
+            phoneNumber : req.body.phoneNumber
         }
         User.create(newUser)
         .then((data)=>{
