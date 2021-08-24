@@ -8,12 +8,12 @@ class AccommodationController {
         where: {
           AuthorId: +req.user.id,
         },
-        order: [["createdAt", "DESC"]],
+        order: [["updatedAt", "DESC"]],
         include: { model: User, attributes: { exclude: ["password"] } },
       });
-      accommodationsData.forEach((el) => {
-        el.price = getRpPrice(el.price);
-      });
+      // accommodationsData.forEach((el) => {
+      //   el.price = getRpPrice(el.price);
+      // });
       res.status(200).json(accommodationsData);
     } catch (err) {
       console.log(err);
@@ -27,7 +27,7 @@ class AccommodationController {
       const accommodationData = await Accommodation.findByPk(id);
 
       if (accommodationData) {
-        accommodationData.price = getRpPrice(accommodationData.price);
+        // accommodationData.price = getRpPrice(accommodationData.price);
         res.status(200).json(accommodationData);
       } else {
         throw { name: "AccommodationNotFound" };
@@ -78,6 +78,8 @@ class AccommodationController {
         const updatedAccomodation = await Accommodation.update(data, {
           where: { id: id },
           returning: true,
+          individualHooks: true,
+          method: "PUT",
         });
         res.status(200).json(updatedAccomodation[1][0]);
       } else {
@@ -121,7 +123,6 @@ class AccommodationController {
             id,
           },
           returning: true,
-          individualHooks: true,
         });
         res.status(200).json(updatedAccomodation[1][0]);
       } else {

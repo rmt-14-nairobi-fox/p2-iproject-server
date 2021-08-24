@@ -133,5 +133,19 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error();
     }
   });
+
+  Accommodation.beforeUpdate(async (data, opt) => {
+    try {
+      if (opt.method === "PUT") {
+        const getGeoCode = await geocode(
+          data.address + " " + data.city + " " + data.zipCode
+        );
+        data.long = getGeoCode.longitude;
+        data.lat = getGeoCode.latitude;
+      }
+    } catch (err) {
+      throw new Error();
+    }
+  });
   return Accommodation;
 };
