@@ -8,13 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      RoomId: {
-        type: Sequelize.INTEGER,
+      roomName: {
+        type: Sequelize.STRING,
       },
       messages: {
         type: Sequelize.STRING,
       },
-      AnimalId: {
+      ReceiverId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Animals",
@@ -23,7 +23,7 @@ module.exports = {
         onDelete: "CASCADE",
         onUpdate: "CASCADE",
       },
-      UserId: {
+      SenderId: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",

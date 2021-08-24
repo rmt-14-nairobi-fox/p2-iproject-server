@@ -1,14 +1,14 @@
 [
   {
-    "RoomId": 1,
-    "messages": "tes room chat 1",
-    "AnimalId": 1,
-    "UserId": 1
+    "roomName": "andreadit",
+    "messages": "hello i want cat",
+    "SenderId": 1,
+    "ReceiverId": 2
   },
   {
-    "RoomId": 2,
-    "messages": "tes room chat 2",
-    "AnimalId": 2,
-    "UserId": 2
+    "roomName": "aditfanly",
+    "messages": "hello i want glider",
+    "SenderId": 2,
+    "ReceiverId": 3
   }
 ]
