@@ -37,6 +37,64 @@ class TeacherController {
             res.status(500).json(err)
         }
     }
+    static async getClass(req, res, next) {
+        const { id } = req.user
+        try {
+            const result = await Class.findAll({
+                where: {
+                    TeacherId: id
+                },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                }
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getStudentClass(req, res, next) {
+        const { idClass } = req.params
+        const idTeacher = req.user.id
+        try {
+            const classes = await Class.findByPk(idClass)
+            if (classes) {
+                const result = await StudentClass.findAll({
+                    where: {
+                        ClassId: idClass,
+                        TeacherId: idTeacher,
+                        status: 'accepted'
+                    }
+                })
+                res.status(200).json(result)
+            } else {
+                throw { name: 'Not Found' }
+            }
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getStudentWaiting(req, res, next) {
+        const { idClass } = req.params
+        const idTeacher = req.user.id
+        try {
+            const classes = await Class.findByPk(idClass)
+            if (classes) {
+                const result = await StudentClass.findAll({
+                    where: {
+                        ClassId: idClass,
+                        TeacherId: idTeacher,
+                        status: 'waiting'
+                    }
+                })
+                res.status(200).json(result)
+            } else {
+                throw { name: 'Not Found' }
+            }
+        } catch (err) {
+            next(err)
+        }
+    }
     static async addClass(req, res, next) {
         const { name } = req.body
         const { id } = req.user
