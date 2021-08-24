@@ -1,7 +1,8 @@
 const router = require('express').Router();
+const teacherRoute = require('./teacher');
+const studentRoute = require('./student');
 
-router.get('/', (req, res) => {
-    res.send('haloo')
-})
+router.use('/teacher', teacherRoute)
+router.use('/student', studentRoute)
 
 module.exports = router
