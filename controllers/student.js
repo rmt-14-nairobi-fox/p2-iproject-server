@@ -37,6 +37,24 @@ class StudentController {
         }
     }
     static async getClass(req, res, next) {
+        try {
+            const result = await Class.findAll({
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt']
+                },
+                include: {
+                    model: Teacher,
+                    attributes: {
+                        exclude: ['password', 'role', 'createdAt', 'updatedAt']
+                    }
+                }
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getMyClass(req, res, next) {
         const { id } = req.user
         try {
             const result = await StudentClass.findAll({
@@ -46,6 +64,35 @@ class StudentController {
                 },
                 attributes: {
                     exclude: ['createdAt', 'updatedAt', 'score1', 'score2', 'score3', 'score4', 'score5', 'totalScore', 'predikat', 'status']
+                },
+                include: {
+                    model: Class,
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
+                    include: {
+                        model: Teacher,
+                        attributes: {
+                            exclude: ['password', 'role', 'createdAt', 'updatedAt']
+                        }
+                    }
+                }
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getWaitingClass(req, res, next) {
+        const { id } = req.user
+        try {
+            const result = await StudentClass.findAll({
+                where: {
+                    StudentId: id,
+                    status: 'waiting'
+                },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt', 'score1', 'score2', 'score3', 'score4', 'score5', 'totalScore', 'predikat', 'status', 'note']
                 },
                 include: {
                     model: Class,
@@ -85,6 +132,42 @@ class StudentController {
                 }
                 await StudentClass.create(newStudentClass)
                 res.status(201).json({ message: 'Success join class' })
+            } else {
+                throw { name: 'Not Found' }
+            }
+        } catch (err) {
+            next(err)
+        }
+    }
+    static async getMyScore(req, res, next) {
+        const { idClass } = req.params
+        const idStudent = req.user.id
+        try {
+            const classes = await Class.findByPk(idClass)
+            if (classes) {
+                const result = await StudentClass.findOne({
+                    where: {
+                        ClassId: idClass,
+                        StudentId: idStudent
+                    },
+                    include: {
+                        model: Class,
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt']
+                        },
+                        include: {
+                            model: Teacher,
+                            attributes: {
+                                exclude: ['password', 'role', 'createdAt', 'updatedAt']
+                            }
+                        }
+                    }
+                })
+                if (result) {
+                    res.status(200).json(result)
+                } else {
+                    throw { name: 'Not Found' }
+                }
             } else {
                 throw { name: 'Not Found' }
             }
