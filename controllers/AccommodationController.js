@@ -40,11 +40,13 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      long: null,
-      lat: null,
       imageUrl: req.body.imageUrl,
       type: req.body.type,
     };
+
+    // const test = await geocode(data.address + " " + data.zipCode);
+    // console.log(test);
+    // res.send(test);
     try {
       const createdAccommodation = await Accommodation.create(data);
 
@@ -64,8 +66,6 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      long: null,
-      lat: null,
       // imageUrl: "",
       type: req.body.type,
     };

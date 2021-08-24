@@ -1,5 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
+const { geocode } = require("../helpers/geocode");
+
 module.exports = (sequelize, DataTypes) => {
   class Accommodation extends Model {
     /**
@@ -106,5 +108,15 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Accommodation",
     }
   );
+
+  Accommodation.beforeCreate(async (data, opt) => {
+    try {
+      const getGeoCode = await geocode(data.address + " " + data.zipCode);
+      data.long = getGeoCode.longitude;
+      data.lat = getGeoCode.latitude;
+    } catch (err) {
+      throw new Error();
+    }
+  });
   return Accommodation;
 };
