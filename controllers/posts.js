@@ -20,6 +20,30 @@ class Controller {
     }
   }
 
+  static async getMyPosts(req, res, next) {
+    try {
+      const user_id = req.user.id;
+
+      const result = await Post.findAll({
+        where: {
+          user_id,
+        },
+        include: [
+          {
+            model: SavedNews,
+            attributes: ['title'],
+          },
+        ],
+        order: [['createdAt', 'DESC']],
+      });
+
+      res.status(200).json(result);
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
+
   static async createPost(req, res, next) {
     try {
       const user_id = req.user.id;

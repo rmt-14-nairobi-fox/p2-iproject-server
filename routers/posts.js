@@ -8,6 +8,8 @@ router.use(authentication);
 
 router.get('/', Controller.getPosts);
 
+router.get('/myposts', Controller.getMyPosts);
+
 router.post('/', postAuthorization, Controller.createPost);
 
 router.put(
