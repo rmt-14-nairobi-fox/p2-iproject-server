@@ -12,6 +12,7 @@ class AccommodationController {
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
@@ -40,7 +41,6 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      imageUrl: req.body.imageUrl,
       type: req.body.type,
     };
     try {
@@ -62,7 +62,6 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      // imageUrl: "",
       type: req.body.type,
     };
     try {

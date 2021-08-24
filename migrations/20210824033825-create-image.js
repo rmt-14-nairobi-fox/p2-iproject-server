@@ -1,54 +1,29 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("Accommodation", {
+    await queryInterface.createTable("Images", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      title: {
+      imageUrl: {
         allowNull: false,
         type: Sequelize.STRING,
-      },
-      address: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      AuthorId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Users",
-          key: "id",
-        },
-        onUpdate: "cascade",
-        onDelete: "cascade",
       },
       description: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-      price: {
-        allowNull: false,
+      AccommodationId: {
         type: Sequelize.INTEGER,
-      },
-      status: {
-        type: Sequelize.STRING,
-      },
-      zipCode: {
-        allowNull: false,
-        type: Sequelize.STRING,
-      },
-      long: {
-        type: Sequelize.FLOAT,
-      },
-      lat: {
-        type: Sequelize.FLOAT,
-      },
-      type: {
-        allowNull: false,
-        type: Sequelize.STRING,
+        references: {
+          model: "Accommodation",
+          key: "id",
+        },
+        onUpdate: "cascade",
+        onDelete: "cascade",
       },
       createdAt: {
         allowNull: false,
@@ -61,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("Accommodation");
+    await queryInterface.dropTable("Images");
   },
 };

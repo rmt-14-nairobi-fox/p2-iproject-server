@@ -7,3 +7,7 @@
 - geocode - email yahoo asra
 
 - imagekit make m-m ? pake email katamune
+
+- Image sama facility nanti aja
+
+- tambah authz for image

@@ -51,6 +51,7 @@ async function imgKitCreate(req, res, next) {
         throw { name: "WrongTypeFile" };
       }
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
