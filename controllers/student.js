@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-const { Student, Class, StudentClass } = require('../models');
+const { Teacher, Student, Class, StudentClass } = require('../models');
 
 class StudentController {
     static async register(req, res, next) {
@@ -34,6 +34,35 @@ class StudentController {
             }
         } catch (err) {
             res.status(500).json(err)
+        }
+    }
+    static async getClass(req, res, next) {
+        const { id } = req.user
+        try {
+            const result = await StudentClass.findAll({
+                where: {
+                    StudentId: id,
+                    status: 'accepted'
+                },
+                attributes: {
+                    exclude: ['createdAt', 'updatedAt', 'score1', 'score2', 'score3', 'score4', 'score5', 'totalScore', 'predikat', 'status']
+                },
+                include: {
+                    model: Class,
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt']
+                    },
+                    include: {
+                        model: Teacher,
+                        attributes: {
+                            exclude: ['password', 'role', 'createdAt', 'updatedAt']
+                        }
+                    }
+                }
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
         }
     }
     static async joinClass(req, res, next) {
