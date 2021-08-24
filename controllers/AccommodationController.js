@@ -83,7 +83,6 @@ class AccommodationController {
 
   static async delete(req, res, next) {
     const id = +req.params.id;
-
     try {
       const foundAccommodation = await Accommodation.findByPk(id);
       if (foundAccommodation) {
@@ -92,6 +91,32 @@ class AccommodationController {
           where: { id: id },
         });
         res.status(200).json({ message: `${dataDelete} success to delete` });
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  static async changeStatus(req, res, next) {
+    const id = +req.params.id;
+
+    const data = {
+      status: req.body.status,
+    };
+
+    try {
+      const foundAccommodation = await Accommodation.findByPk(id);
+      if (foundAccommodation) {
+        const updatedAccomodation = await Accommodation.update(data, {
+          where: {
+            id,
+          },
+          returning: true,
+          individualHooks: true,
+        });
+        res.status(200).json(updatedAccomodation[1][0]);
       } else {
         throw { name: "AccommodationNotFound" };
       }

@@ -25,4 +25,6 @@ router.put("/:id", authZOwner, AccommodationController.update);
 
 router.delete("/:id", authZOwner, AccommodationController.delete);
 
+router.patch("/:id", authZOwner, AccommodationController.changeStatus);
+
 module.exports = router;
