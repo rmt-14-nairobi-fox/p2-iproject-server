@@ -5,7 +5,7 @@ module.exports = {
     const data = [
       {
         title: "Good House",
-        address: "Jalan Bontang IV",
+        address: "Depok",
         AuthorId: 1,
         description: "Full furnished",
         price: 2000000,

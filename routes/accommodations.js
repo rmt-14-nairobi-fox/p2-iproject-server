@@ -13,12 +13,9 @@ router.get("/", AccommodationController.getAll);
 
 router.get("/:id", authZOwner, AccommodationController.getById);
 
-router.post(
-  "/",
-  upload.single("imageUrl"),
-  imgKitCreate,
-  AccommodationController.create
-);
+// upload.single("imageUrl"),
+// imgKitCreate,
+router.post("/", AccommodationController.create);
 
 //! will have middleware for imagekit
 router.put("/:id", authZOwner, AccommodationController.update);

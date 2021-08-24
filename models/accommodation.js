@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Accommodation.hasMany(models.Image, { foreignKey: "AccommodationId" });
       Accommodation.belongsTo(models.User, { foreignKey: "AuthorId" });
       Accommodation.belongsToMany(models.User, {
         through: "SaveAccommodations",

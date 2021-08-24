@@ -40,7 +40,6 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      imageUrl: req.body.imageUrl,
       type: req.body.type,
     };
     try {
@@ -62,7 +61,6 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
-      // imageUrl: "",
       type: req.body.type,
     };
     try {
