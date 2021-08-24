@@ -70,5 +70,30 @@ class ImageController {
       next(err);
     }
   }
+  static async getImageById(req, res, next) {
+    const imageId = +req.params.imageId;
+    const accommodationId = +req.params.id;
+
+    try {
+      const accommodationFound = await Accommodation.findByPk(accommodationId);
+      if (accommodationFound) {
+        const imageFound = await Image.findByPk(imageId);
+
+        if (imageFound) {
+          const imageData = await Image.findByPk(imageId, {
+            include: Accommodation,
+          });
+
+          res.status(200).json(imageData);
+        } else {
+          throw { name: "ImageNotFound" };
+        }
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 module.exports = ImageController;

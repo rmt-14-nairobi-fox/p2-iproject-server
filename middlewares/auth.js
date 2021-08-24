@@ -1,5 +1,5 @@
 const { verifyToken } = require("../helpers/jwt");
-const { User, Accommodation, SaveAccommodation } = require("../models");
+const { User, Accommodation, SaveAccommodation, Image } = require("../models");
 
 async function auth(req, res, next) {
   const { access_token: accessToken } = req.headers;
@@ -67,7 +67,7 @@ async function authZCustomer(req, res, next) {
 
   try {
     const foundSaved = await SaveAccommodation.findByPk(paramsId);
-    if (paramsId) {
+    if (foundSaved) {
       if (foundSaved.UserId === +req.user.id) {
         next();
       } else {
@@ -81,4 +81,26 @@ async function authZCustomer(req, res, next) {
   }
 }
 
-module.exports = { auth, authZOwner, authZCustomer };
+async function authZimage(req, res, next) {
+  const imageId = +req.params.imageId;
+
+  try {
+    const foundImage = await Image.findByPk(imageId, {
+      include: Accommodation,
+    });
+    if (foundImage) {
+      if (foundImage.Accommodation.AuthorId === +req.user.id) {
+        next();
+      } else {
+        throw { name: "UserVerify" };
+      }
+    } else {
+      throw { name: "ImageNotFound" };
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+}
+
+module.exports = { auth, authZOwner, authZCustomer, authZimage };
