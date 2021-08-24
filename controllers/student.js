@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-const { Student } = require('../models');
+const { Student, Class, StudentClass } = require('../models');
 
 class StudentController {
     static async register(req, res, next) {
@@ -39,6 +39,28 @@ class StudentController {
     static async joinClass(req, res, next) {
         const idClass = req.params.id
         const idStudent = req.user.id
+        try {
+            const result = await Class.findByPk(idClass)
+            if (result) {
+                const newStudentClass = {
+                    ClassId: idClass,
+                    StudentId: idStudent,
+                    score1: 0,
+                    score2: 0,
+                    score3: 0,
+                    score4: 0,
+                    score5: 0,
+                    totalScore: 0,
+                    status: 'waiting'
+                }
+                await StudentClass.create(newStudentClass)
+                res.status(201).json({ message: 'Success join class' })
+            } else {
+                throw { name: 'Not Found' }
+            }
+        } catch (err) {
+            next(err)
+        }
     }
 }
 

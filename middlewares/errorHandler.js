@@ -43,6 +43,9 @@ function errorHandler(err, req, res, next) {
         case 'under 0':
             res.status(400).json({ message: 'Id must be greater than zero' })
             break;
+        case 'Not Found':
+            res.status(404).json({ message: 'Data Not Found' })
+            break;
         default:
             res.status(500).json({ message: 'Internal Server Error' })
             break;
