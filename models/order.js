@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: "CASCADE",
       },
       isPayment: {
-        tipe: DataTypes.STRING,
+        type: DataTypes.STRING,
       },
       totalPrice: {
         type: DataTypes.INTEGER,
