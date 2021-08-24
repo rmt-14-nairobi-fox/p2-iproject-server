@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       onUpdate : 'cascade',
       onDelete : 'cascade'
     },
+    imgUrl: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }
   }, {
     sequelize,
     modelName: 'Drug',
