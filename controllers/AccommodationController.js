@@ -27,6 +27,7 @@ class AccommodationController {
       const accommodationData = await Accommodation.findByPk(id);
 
       if (accommodationData) {
+        accommodationData.price = getRpPrice(accommodationData.price);
         res.status(200).json(accommodationData);
       } else {
         throw { name: "AccommodationNotFound" };
@@ -45,6 +46,8 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
+      city: req.body.city,
+
       type: req.body.type,
     };
     try {
@@ -66,6 +69,7 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
+      city: req.body.city,
       type: req.body.type,
     };
     try {
