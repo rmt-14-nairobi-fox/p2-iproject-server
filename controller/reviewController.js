@@ -1,4 +1,4 @@
-const { Review } = require("../models");
+const { Review, User } = require("../models");
 
 class reviewController {
   static async AllReview(req, res, next) {
@@ -58,20 +58,21 @@ class reviewController {
     const id = +req.params.id;
     const { userpoin, review, recomendation } = req.body;
     try {
-      const post = await Review.findByPk(id);
-      if (post !== null) {
+      const userReview = await Review.findByPk(id);
+      if (userReview !== null) {
         const payload = {
           userpoin: userpoin,
           review: review,
           recomendation: recomendation,
         };
-        const result = await Post.update(payload, { where: { id: id }, returning: true });
+        console.log(payload);
+        const result = await Review.update(payload, { where: { id: id }, returning: true });
         res.status(200).json(result[1][0]);
       } else {
         throw { name: "NotFound" };
       }
     } catch (err) {
-      next(err);
+      res.status(500).json(err);
     }
   }
   static async deleteReview(req, res, next) {
