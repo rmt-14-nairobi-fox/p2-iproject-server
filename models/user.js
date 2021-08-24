@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Review, { foreignKey: "UserId" });
+      User.hasMany(models.Watchlist, { foreignKey: "UserId" });
     }
   }
   User.init(
