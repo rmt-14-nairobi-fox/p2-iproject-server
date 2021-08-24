@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { hashPassword } = require('../helpers/bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class Student extends Model {
     /**
@@ -15,12 +16,58 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Student.init({
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    name: DataTypes.STRING,
-    phoneNumber: DataTypes.STRING,
-    role: DataTypes.STRING
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: { msg: 'Email cannot be null' },
+        notEmpty: { msg: 'Email cannot be Empty' },
+        isEmail: { msg: 'Must be email format' }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Password cannot be null' },
+        notEmpty: { msg: 'Password cannot be Empty' }
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Name cannot be null' },
+        notEmpty: { msg: 'Name cannot be Empty' }
+      }
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Phone Number cannot be null' },
+        notEmpty: { msg: 'Phone Number cannot be Empty' }
+      }
+    },
+    role: {
+      type: DataTypes.STRING,
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'role cannot be null' },
+        notEmpty: { msg: 'role cannot be Empty' }
+      }
+    }
   }, {
+    hooks: {
+      beforeCreate: student => {
+        student.password = hashPassword(student.password)
+      }
+    },
     sequelize,
     modelName: 'Student',
   });
