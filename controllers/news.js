@@ -62,6 +62,25 @@ class Controller {
       next(err);
     }
   }
+
+  static async deleteSavedNews(req, res, next) {
+    try {
+      const id = req.params.savedId;
+      const user_id = req.user.id;
+
+      await SavedNews.destroy({
+        where: {
+          id,
+          user_id,
+        },
+      });
+
+      res.status(200).json({ message: 'Saved news deleted successfully' });
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
 }
 
 module.exports = Controller;
