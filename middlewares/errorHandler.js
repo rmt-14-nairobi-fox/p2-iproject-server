@@ -2,7 +2,7 @@ function errorHandler(err, req, res, next) {
   let code;
   let message;
   let errors;
-
+  console.log(err.name);
   switch (err.name) {
     case "NotFound":
       message = "Data Not Found";
@@ -31,7 +31,7 @@ function errorHandler(err, req, res, next) {
       code = 400;
       break;
 
-    case "FailedLogin":
+    case "LoginFailed":
       message = "Email/password invalid";
       code = 401;
       break;
