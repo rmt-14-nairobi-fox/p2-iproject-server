@@ -31,6 +31,18 @@ function errorHandler(err, req, res, next) {
         case 'Wrong Email/Password':
             res.status(400).json({ message: 'Please Login First' })
             break;
+        case 'Forbidden Add Class':
+            res.status(403).json({ message: 'Only teachers can add class' })
+            break;
+        case 'Forbidden Follow Class':
+            res.status(403).json({ message: 'Only students can follow class' })
+            break;
+        case 'Invalid Id':
+            res.status(400).json({ message: 'Id must be number' })
+            break;
+        case 'under 0':
+            res.status(400).json({ message: 'Id must be greater than zero' })
+            break;
         default:
             res.status(500).json({ message: 'Internal Server Error' })
             break;

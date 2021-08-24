@@ -16,8 +16,23 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Class.init({
-    TeacherId: DataTypes.INTEGER,
-    name: DataTypes.STRING
+    TeacherId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Teacher Id cannot be null' },
+        notEmpty: { msg: 'Teacher Id cannot be empty' },
+        isInt: { msg: 'Teacher Id must be a number' },
+      }
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: { msg: 'Class name cannot be null' },
+        notEmpty: { msg: 'Class name cannot be empty' },
+      }
+    }
   }, {
     sequelize,
     modelName: 'Class',

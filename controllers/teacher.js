@@ -1,6 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
-const { Teacher } = require('../models');
+const { Teacher, Class } = require('../models');
 
 class TeacherController {
     static async register(req, res, next) {
@@ -39,6 +39,15 @@ class TeacherController {
     static async addClass(req, res, next) {
         const { name } = req.body
         const { id } = req.user
+        try {
+            const result = await Class.create({
+                TeacherId: id,
+                name
+            })
+            res.status(201).json(result)
+        } catch (err) {
+            next(err)
+        }
     }
 }
 
