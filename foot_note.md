@@ -1,8 +1,6 @@
 - tentukan nama website
 
-- kalau ada waktu coba ada facility dan AccommodationFacility m-m
-
-- Visit table untuk User sama accommodation m-m dengan ada visitDate
+- direction api
 
 - history liat siapa aja yang save accommodationnya
 
