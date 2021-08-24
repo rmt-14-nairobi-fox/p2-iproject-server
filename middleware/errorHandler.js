@@ -1,5 +1,3 @@
-function errorHandler(err, req, res, next) {
-  res.status(500).json(err);
-}
+function errorHandler(err, req, res, next) {}
 
 module.exports = errorHandler;

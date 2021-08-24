@@ -14,7 +14,7 @@ class UserController {
       const result = await User.create(payload);
       res.status(201).json({ id: result.id, email: result.email });
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
   static async login(req, res, next) {
@@ -32,7 +32,7 @@ class UserController {
         throw { name: "UnauthorizedLogin" };
       }
     } catch (err) {
-      res.status(500).json(err);
+      next(err);
     }
   }
 }
