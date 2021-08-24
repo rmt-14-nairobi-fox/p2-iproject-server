@@ -59,22 +59,23 @@ class UserController {
         const user = ticket.getPayload();
         const email = user.email;
         const payload = {
-          fullName: req.body.fullName,
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
-          phoneNumber: req.body.phoneNumber,
-          address: req.body.address,
-        };
-        const payload = {
+          fullName: user.given_name,
           username: user.given_name + user.family_name,
           email: user.email,
           password: user.sub,
-          fullName: user.given_name,
           phoneNumber: user.sub,
           address: "Indonesia",
           imgUser: user.picture,
         };
+        const createUser = await User.findOrCreate({
+          where: { email: email },
+          defaults: payload,
+        });
+        access_token = signToken({
+          id: createUser[0].id,
+          email: createUser[0].email,
+        });
+        res.status(200).json({ access_token });
       }
     } catch (error) {
       next(error);
