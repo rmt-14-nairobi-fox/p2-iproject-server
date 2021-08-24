@@ -13,6 +13,8 @@ router.post(
 
 router.post('/login', Controller.login);
 
+router.post('/google', Controller.google);
+
 router.use(authentication);
 
 router.patch(

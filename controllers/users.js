@@ -1,6 +1,7 @@
 const { User } = require('../models');
 const { checkPassword } = require('../helpers/bcrypt');
 const { generateToken } = require('../helpers/jwt');
+const { OAuth2Client } = require('google-auth-library');
 
 class Controller {
   static async register(req, res, next) {
@@ -64,6 +65,51 @@ class Controller {
 
         throw error;
       }
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
+
+  static async google(req, res, next) {
+    try {
+      const { idToken, newsPrefId } = req.body;
+      const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+      const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+
+      const { name, email, picture } = ticket.getPayload();
+      const password = name + email + process.env.OAUTH_SECRET;
+      const payload = {
+        name,
+        email,
+        password,
+        imgUrl: picture,
+        newsPrefId,
+      };
+
+      const result = await User.findOrCreate({
+        where: { email },
+        defaults: payload,
+      });
+
+      const { id } = result[0];
+      const newPayload = {
+        id,
+        email,
+      };
+
+      const accessToken = generateToken(newPayload);
+      const response = {
+        access_token: accessToken,
+        name,
+        imgUrl: picture,
+      };
+
+      res.status(result[1] ? 201 : 200).json(response);
     } catch (err) {
       err.endpoint = req.baseUrl;
       next(err);
