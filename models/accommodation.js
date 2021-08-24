@@ -90,7 +90,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       long: DataTypes.FLOAT,
       lat: DataTypes.FLOAT,
-      imageUrl: DataTypes.STRING,
       type: {
         type: DataTypes.STRING,
         allowNull: false,

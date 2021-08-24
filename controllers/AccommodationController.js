@@ -12,6 +12,7 @@ class AccommodationController {
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
+      console.log(err);
       next(err);
     }
   }
