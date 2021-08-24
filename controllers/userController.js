@@ -1,6 +1,8 @@
 const { User } = require("../models");
 const { checkPassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_AUTH_ID);
 class UserController {
   static async register(req, res, next) {
     try {
@@ -44,7 +46,41 @@ class UserController {
       next(error);
     }
   }
-  static async googleLogin(req, res, next) {}
+  static async googleLogin(req, res, next) {
+    try {
+      let access_token;
+      const ticket = await client.verifyIdToken({
+        idToken: req.body.access_token,
+        audience: process.env.GOOGLE_AUTH_ID,
+      });
+      if (!ticket) {
+        throw { name: "LoginFailed" };
+      } else {
+        const user = ticket.getPayload();
+        const email = user.email;
+        const payload = {
+          fullName: user.given_name,
+          username: user.given_name + user.family_name,
+          email: user.email,
+          password: user.sub,
+          phoneNumber: user.sub,
+          address: "Indonesia",
+          imgUser: user.picture,
+        };
+        const createUser = await User.findOrCreate({
+          where: { email: email },
+          defaults: payload,
+        });
+        access_token = signToken({
+          id: createUser[0].id,
+          email: createUser[0].email,
+        });
+        res.status(200).json({ access_token });
+      }
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = UserController;
