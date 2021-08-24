@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       publishedAt: DataTypes.DATE,
       source_name: DataTypes.STRING,
       user_id: DataTypes.INTEGER,
+      source_url: DataTypes.STRING,
     },
     {
       sequelize,
