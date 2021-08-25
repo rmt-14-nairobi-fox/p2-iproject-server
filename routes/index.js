@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const farmRoute = require('./farm-route')
+const formRoute = require('./form-route')
 const CustController = require('../controllers/user-cust-controller')
 const FormController = require('../controllers/form-controller')
 const errorHandling = require('../middleware/errorHandling')
@@ -10,6 +11,7 @@ router.post('/login', CustController.custLogin)
 
 router.use(authentication)
 router.use(farmRoute)
+router.use(formRoute)
 
 router.use(errorHandling)
 
