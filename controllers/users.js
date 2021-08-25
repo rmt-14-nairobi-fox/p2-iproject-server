@@ -135,7 +135,7 @@ class Controller {
         },
       });
 
-      res.status(200).json({ message: 'Profile updated' });
+      res.status(200).json({ message: 'Profile updated', name, imgUrl });
     } catch (err) {
       err.endpoint = req.baseUrl;
       next(err);
