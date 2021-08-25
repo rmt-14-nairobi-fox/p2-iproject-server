@@ -77,8 +77,10 @@ class reviewController {
   }
   static async deleteReview(req, res, next) {
     const id = +req.params.id;
+    console.log(id, "KKKKKKKKKKKKKKKKKK");
     try {
       const review = await Review.findByPk(id);
+      console.log(review, "MMMMMMMMMMMMMMMMMMMMMm");
       if (review !== null) {
         await Review.destroy({
           where: { id: id },
