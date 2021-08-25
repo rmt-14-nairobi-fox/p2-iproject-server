@@ -67,7 +67,6 @@ class AccommodationController {
       AuthorId: +req.user.id,
       description: req.body.description,
       price: +req.body.price,
-      status: req.body.status || "active",
       zipCode: req.body.zipCode,
       city: req.body.city,
       type: req.body.type,
@@ -138,7 +137,10 @@ class AccommodationController {
     try {
       const accommodationsData = await Accommodation.findAll({
         order: [["createdAt", "DESC"]],
-        include: { model: User, attributes: { exclude: ["password"] } },
+        where: {
+          status: "active",
+        },
+        include: [{ model: User, attributes: { exclude: ["password"] } }],
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
@@ -149,7 +151,9 @@ class AccommodationController {
   static async getByIdPublic(req, res, next) {
     const id = +req.params.id;
     try {
-      const accommodationData = await Accommodation.findByPk(id);
+      const accommodationData = await Accommodation.findByPk(id, {
+        include: { model: User, attributes: { exclude: ["password"] } },
+      });
 
       if (accommodationData) {
         res.status(200).json(accommodationData);

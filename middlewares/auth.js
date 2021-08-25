@@ -3,6 +3,7 @@ const { User, Accommodation, SaveAccommodation, Image } = require("../models");
 
 async function auth(req, res, next) {
   const { access_token: accessToken } = req.headers;
+  console.log(accessToken, "<<<<<<<<<<<<<<<<<<<<");
   try {
     if (accessToken) {
       const tokenVerified = verifyToken(accessToken);
@@ -22,7 +23,6 @@ async function auth(req, res, next) {
       throw { name: "NoToken" };
     }
   } catch (err) {
-    console.log(err);
     next(err);
   }
 }
@@ -58,6 +58,7 @@ async function authZOwner(req, res, next) {
       throw { name: "UserVerify" };
     }
   } catch (err) {
+    console.log("test");
     next(err);
   }
 }
@@ -74,7 +75,7 @@ async function authZCustomer(req, res, next) {
   }
 }
 
-async function authZCustomer(req, res, next) {
+async function authZCustomerAcc(req, res, next) {
   const paramsId = +req.params.id;
 
   try {

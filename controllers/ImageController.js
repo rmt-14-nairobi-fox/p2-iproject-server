@@ -95,5 +95,27 @@ class ImageController {
       next(err);
     }
   }
+
+  // !PUBLIC
+  static async getAllImagesPublic(req, res, next) {
+    const paramsId = +req.params.accomId;
+    try {
+      const accommodationData = await Accommodation.findByPk(paramsId);
+
+      if (accommodationData) {
+        const imageData = await Image.findAll({
+          where: {
+            AccommodationId: paramsId,
+          },
+        });
+
+        res.status(200).json(imageData);
+      } else {
+        throw { name: "AccommodationNotFound" };
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 module.exports = ImageController;

@@ -25,8 +25,18 @@ class SaveAccommodationController {
       AccommodationId: +req.params.id,
     };
     try {
-      const saveAccommodation = await SaveAccommodation.create(data);
-      res.status(201).json(saveAccommodation);
+      const foundAccommodation = await SaveAccommodation.findAll({
+        where: {
+          UserId: data.UserId,
+          AccommodationId: data.AccommodationId,
+        },
+      });
+      if (foundAccommodation.length > 0) {
+        throw { name: "AlreadyAdded" };
+      } else {
+        const saveAccommodation = await SaveAccommodation.create(data);
+        res.status(201).json(saveAccommodation);
+      }
     } catch (err) {
       next(err);
     }

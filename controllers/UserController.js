@@ -129,6 +129,7 @@ class UserController {
         address: req.body.address,
         role: "customer",
         zipCode: req.body.zipCode,
+        city: req.body.city,
       };
 
       try {
