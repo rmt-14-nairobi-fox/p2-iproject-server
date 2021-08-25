@@ -12,10 +12,31 @@ let apiClient = new midtransClient.Snap({
   clientKey: process.env.MIDTRANS_CLIENT_KEY,
 });
 class OrderController {
+  static async cancelTransaction(req, res, next) {
+    try {
+      const idForUpdate = req.params.id;
+      const newStatus = {
+        isPayment: "CANCELED",
+      };
+      const updateOrder = await Order.update(newStatus, {
+        where: {
+          id: idForUpdate,
+        },
+      });
+      res.status(200).json(updateOrder);
+    } catch (error) {
+      next(error);
+    }
+  }
   static async fetchOrderById(req, res, next) {
     try {
       const response = await Order.findByPk(req.params.id, {
-        include: [{ model: OrderDetail, include: [Product] }],
+        include: [
+          {
+            model: OrderDetail,
+            include: [{ model: Product, include: [User] }],
+          },
+        ],
       });
       res.status(200).json(response);
     } catch (error) {
@@ -64,6 +85,7 @@ class OrderController {
         where: {
           CustomerId: req.user.id,
         },
+        order: [["id", "DESC"]],
       });
 
       res.status(200).json(orders);
@@ -76,7 +98,6 @@ class OrderController {
       let totalPrice = 0;
 
       req.body.orderDetails.forEach((el) => {
-        console.log(el.price, "<<<<<PRICE");
         totalPrice += el.price;
       });
 
@@ -97,26 +118,69 @@ class OrderController {
       });
 
       const newDetail = await OrderDetail.bulkCreate(newOrderDetail);
-
+      const { custDetails } = req.body;
       let parameter = {
         transaction_details: {
-          order_id: createOrder.id, //order_id
+          order_id: createOrder.id,
           gross_amount: +totalPrice,
         },
         credit_card: {
           secure: true,
         },
-        customer_details: req.body.custDetails,
+        customer_details: {
+          customer_name: custDetails.custName,
+          customer_email: custDetails.email,
+          customer_address: custDetails.address,
+          customer_phone: custDetails.phoneNumber,
+          customer_date_service: custDetails.dateService,
+        },
       };
       const transaction = await snap.createTransaction(parameter);
       let transactionToken = transaction.token;
       //update database masukin token
+      let payloadToken = {
+        tokenPayment: transactionToken,
+      };
+      const updateOrder = await Order.update(payloadToken, {
+        where: {
+          id: createOrder.id,
+        },
+      });
       res.status(200).json(transactionToken);
     } catch (error) {
-      console.log(error, "<<<<<<<<<");
       next(error);
     }
   }
 }
 
 module.exports = OrderController;
+
+// { totalPrice: 170000,
+//   orderDetails:
+//    [ { id: 15,
+//        name: 'The Rock Lightning',
+//        ProviderId: 7,
+//        price: 150000,
+//        ServiceId: 10,
+//        detail:
+//         'Selain bisa potong rambut juga bisa potong arus listrik rumahmu',
+//        createdAt: '2021-08-25T12:29:57.008Z',
+//        updatedAt: '2021-08-25T12:29:57.008Z',
+//        Service: [Object],
+//        User: [Object] },
+//      { id: 13,
+//        name: 'Messi Gardener',
+//        ProviderId: 5,
+//        price: 20000,
+//        ServiceId: 11,
+//        detail: 'Bersihkan kebun tanpa sisa',
+//        createdAt: '2021-08-25T12:29:57.008Z',
+//        updatedAt: '2021-08-25T12:29:57.008Z',
+//        Service: [Object],
+//        User: [Object] } ],
+//   custDetails:
+//    { custName: 'customerregist',
+//      email: 'cust3@mail.com',
+//      address: 'Jl. Singgasana no 69.  Pringsewu, Lampung, Indonesia.',
+//      phoneNumber: '+6282181080180',
+//      dateService: '2021-08-28' } }

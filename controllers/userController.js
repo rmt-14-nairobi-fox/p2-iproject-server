@@ -4,6 +4,16 @@ const { signToken } = require("../helpers/jwt");
 const { OAuth2Client } = require("google-auth-library");
 const client = new OAuth2Client(process.env.GOOGLE_AUTH_ID);
 class UserController {
+  static async findUser(req, res, next) {
+    const { email } = req.user;
+    const userLogin = await User.findOne({
+      where: {
+        email: email,
+      },
+      attributes: { exclude: ["password", "createdAt", "updatedAt"] },
+    });
+    res.status(200).json(userLogin);
+  }
   static async register(req, res, next) {
     try {
       const payload = {
