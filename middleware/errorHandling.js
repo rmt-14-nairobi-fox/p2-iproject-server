@@ -20,6 +20,10 @@ function errorHandling(err, req, res, next) {
         code = 403;
         msg.push(err.msg);
 
+    } else if (err.name === 'NotFound') {
+        code = 403;
+        msg.push('it seems what you trying to find doesnt exist');
+
     } else {
         code = 500;
         msg.push('Internal server error');

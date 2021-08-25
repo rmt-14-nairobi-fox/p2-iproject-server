@@ -4,6 +4,7 @@ const formRoute = require('./form-route')
 const adminRoute = require('./admin-route')
 const CustController = require('../controllers/user-cust-controller')
 const AdminController = require('../controllers/user-admin-controller')
+const TypeController = require('../controllers/type-controller')
 const errorHandling = require('../middleware/errorHandling')
 const authentication = require('../middleware/authentication')
 const {
@@ -16,11 +17,13 @@ router.post('/admin/register', AdminController.adminRegister)
 router.post('/admin/login', AdminController.adminLogin)
 
 router.use(authentication)
-router.use(farmRoute)
-router.use(formRoute)
+router.get('/user', AdminController.checkUser)
+router.use('/farm', farmRoute)
+router.use('/form', formRoute)
+router.get('/type', TypeController.getType)
 
 router.use(onlyAdmin)
-router.use(adminRoute)
+router.use('/admin', adminRoute)
 
 router.use(errorHandling)
 

@@ -101,6 +101,10 @@ class AdminController {
             next(err)
         }
     }
+
+    static checkUser(req, res, next) {
+        res.status(200).json(req.user)
+    }
 }
 
 module.exports = AdminController

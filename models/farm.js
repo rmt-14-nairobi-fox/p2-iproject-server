@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Farm.belongsTo(models.User)
       Farm.belongsTo(models.Type)
-      Farm.hasMany(models.Form)
     }
   };
   Farm.init({

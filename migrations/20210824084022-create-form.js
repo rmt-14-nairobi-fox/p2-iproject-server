@@ -8,25 +8,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      user: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      number: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       UserId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+        allowNull: false
       },
       FarmId: {
         type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'Farms',
-          key: 'id'
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+        allowNull: false
+      },
+      farmName: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       request: {
         type: Sequelize.TEXT,

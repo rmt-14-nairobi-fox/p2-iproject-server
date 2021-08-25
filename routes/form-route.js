@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const FormController = require('../controllers/form-controller');
 
-router.post('/form', FormController.createForm)
-router.get('/form', FormController.readCustForm)
+router.post('/', FormController.createForm)
+router.get('/', FormController.readAllForm)
 
 module.exports = router;
