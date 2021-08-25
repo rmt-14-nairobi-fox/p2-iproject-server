@@ -10,4 +10,17 @@
 
 - Image sama facility nanti aja
 
-- city sama country
+- back button
+
+- fitur:
+  register butuh email lagi
+  cron job
+  carousel
+
+- cms done only edit some view and add errors
+
+- register beloman
+
+- api doc
+
+- direction coba

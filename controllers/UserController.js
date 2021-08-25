@@ -14,6 +14,7 @@ class UserController {
         address: req.body.address,
         role: "owner",
         zipCode: req.body.zipCode,
+        city: req.body.city,
       };
 
       try {

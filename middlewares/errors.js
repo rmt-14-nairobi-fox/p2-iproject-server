@@ -38,6 +38,7 @@ async function errorHandler(err, req, res, next) {
     message = { message: ["You do not have the access"] };
   }
 
+  console.log(err);
   res.status(code).json(message);
 }
 

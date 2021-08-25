@@ -75,6 +75,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "City is required",
+          },
+          notEmpty: {
+            msg: "City is required",
+          },
+        },
+      },
       role: DataTypes.STRING,
       zipCode: {
         type: DataTypes.STRING,

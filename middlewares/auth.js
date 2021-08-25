@@ -27,6 +27,18 @@ async function auth(req, res, next) {
   }
 }
 
+async function authNoAccessCustomer(req, res, next) {
+  try {
+    if (req.user.role === "owner") {
+      next();
+    } else {
+      throw { name: "UserVerify" };
+    }
+  } catch (err) {
+    next(err);
+  }
+}
+
 async function authZOwner(req, res, next) {
   const paramsId = +req.params.id;
 
@@ -103,4 +115,10 @@ async function authZimage(req, res, next) {
   }
 }
 
-module.exports = { auth, authZOwner, authZCustomer, authZimage };
+module.exports = {
+  auth,
+  authZOwner,
+  authZCustomer,
+  authZimage,
+  authNoAccessCustomer,
+};
