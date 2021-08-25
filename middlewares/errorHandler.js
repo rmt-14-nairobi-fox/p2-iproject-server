@@ -3,6 +3,8 @@ function errorHandler(err, req, res, next) {
   let message;
   let errors;
   console.log(err.name);
+  console.log("======================");
+  console.log(err);
   switch (err.name) {
     case "NotFound":
       message = "Data Not Found";
@@ -56,7 +58,7 @@ function errorHandler(err, req, res, next) {
       break;
   }
 
-  res.status(code).json(message);
+  res.status(code).json({ message });
 }
 
 module.exports = errorHandler;

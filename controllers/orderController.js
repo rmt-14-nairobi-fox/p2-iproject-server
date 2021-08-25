@@ -23,7 +23,7 @@ class OrderController {
           id: idForUpdate,
         },
       });
-      res.status(200).json(updateOrder);
+      res.status(200).json({ message: "payment canceled" });
     } catch (error) {
       next(error);
     }
@@ -40,7 +40,6 @@ class OrderController {
       });
       res.status(200).json(response);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
@@ -62,8 +61,22 @@ class OrderController {
           idFromDb + status_code + grossFromDb + myServerKey
         );
 
+        let payloadNewOrder;
+
+        if (status_code == "202") {
+          payloadNewOrder = {
+            isPayment: "CANCELED",
+          };
+        }
+
+        if (status_code == "407") {
+          payloadNewOrder = {
+            isPayment: "CANCELED",
+          };
+        }
+
         if (signatureMidTrans === hashSignature) {
-          const payloadNewOrder = {
+          payloadNewOrder = {
             isPayment: "PAID",
           };
 
@@ -72,8 +85,8 @@ class OrderController {
               id: idFromDb,
             },
           });
-          res.status(200).json(updateOrder);
         }
+        res.status(200).json({ message: "payment success" });
       }
     } catch (error) {
       next(error);

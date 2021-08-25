@@ -74,7 +74,7 @@ class UserController {
           email: user.email,
           password: user.sub,
           phoneNumber: user.sub,
-          address: "Indonesia",
+          address: "Jl. Kanan no 13, Pringsewu, Lampung, Indonesia. 35372",
           imgUser: user.picture,
         };
         const createUser = await User.findOrCreate({
