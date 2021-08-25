@@ -41,7 +41,18 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    imgUrl: DataTypes.STRING,
+    imgUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'image cannot be empty'
+        },
+        notNull: {
+          msg: 'image cannot be empty'
+        }
+      }
+    },
     location: {
       type: DataTypes.STRING,
       allowNull: false,
