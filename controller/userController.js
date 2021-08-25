@@ -1,6 +1,5 @@
 const { signToken, checkPass } = require("../helpers/util");
 const { User, Animal, Chat } = require("../models");
-const { bullSendemail } = require("../helpers/bull");
 
 class userController {
   static async login(req, res, next) {
@@ -30,33 +29,6 @@ class userController {
     }
   }
 
-  static async getAllanimal(req, res) {
-    try {
-      const animals = await Animal.findAll({
-        include: [{ model: User, attributes: { exclude: ["password"] } }],
-      });
-      res.status(200).json(animals);
-    } catch (err) {
-      next(err);
-    }
-  }
-
-  static async createAnimal(req, res, next) {
-    const UserId = Number(req.user.id);
-    const { name, type, imageUrl } = req.body;
-    const newAnimal = { name, type, imageUrl, UserId };
-
-    try {
-      const animal = await Animal.create(newAnimal, { returning: true });
-
-      //* send queue
-      bullSendemail(animal);
-      res.status(201).json(animal);
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async calculateLocation(req, res, next) {
     try {
       const { latitude, longitude } = req.location;
@@ -75,13 +47,12 @@ class userController {
 
       const data = animals.filter((el) => el.User.distance <= 30);
 
+      if (!data.length) throw { code: 400, name: "No Nearby Adopted" };
+
       res.status(200).json(data);
-    } catch (error) {
+    } catch (err) {
       next(err);
     }
-    //! ip
-    // let lat2 = -6.1741;
-    // let lon2 = 106.8296;
   }
 }
 

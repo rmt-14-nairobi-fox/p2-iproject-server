@@ -14,9 +14,42 @@ module.exports = (sequelize, DataTypes) => {
   }
   Animal.init(
     {
-      name: DataTypes.STRING,
-      type: DataTypes.STRING,
-      imageUrl: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "name field must be filled",
+          },
+          notNull: {
+            msg: "name field must be filled",
+          },
+        },
+      },
+      type: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "type field must be filled",
+          },
+          notNull: {
+            msg: "type field must be filled",
+          },
+        },
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            msg: "imageUrl field must be filled",
+          },
+          notNull: {
+            msg: "imageUrl field must be filled",
+          },
+        },
+      },
       UserId: DataTypes.INTEGER,
     },
     {

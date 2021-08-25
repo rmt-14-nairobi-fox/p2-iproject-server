@@ -1,19 +1,16 @@
 const userController = require("../controller/userController");
 const router = require("express").Router();
-const auth = require("../middlewares/auth");
+const userRouter = require("./userRoutes");
+const animalRouter = require("./animalRoutes");
 const errorHandler = require("../middlewares/errorHandler");
 const { router: bullRouter } = require("../helpers/bull");
 const geoLocation = require("../helpers/geolocation");
 
 router.use("/admin/queues", bullRouter);
-
-router.post("/login", userController.login);
-router.get("/animal", userController.getAllanimal);
+router.use("/user", userRouter);
+router.use("/animal", animalRouter);
 
 router.post("/nearbyPost", geoLocation, userController.calculateLocation);
-
-router.use(auth);
-router.post("/animalAdd", userController.createAnimal);
 
 router.use(errorHandler);
 
