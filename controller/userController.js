@@ -1,11 +1,5 @@
-const {
-  signToken,
-  verifyToken,
-  genPass,
-  checkPass,
-} = require("../helpers/util");
+const { signToken, checkPass } = require("../helpers/util");
 const { User, Animal, Chat } = require("../models");
-// const transporter = require("../helpers/sendMail");
 const { bullSendemail } = require("../helpers/bull");
 
 class userController {
@@ -65,7 +59,7 @@ class userController {
 
   static async calculateLocation(req, res, next) {
     try {
-      const { latitude, longitude } = req.body;
+      const { latitude, longitude } = req.location;
       const animals = await Animal.findAll({
         include: [{ model: User, attributes: { exclude: ["password"] } }],
       });
@@ -85,16 +79,6 @@ class userController {
     } catch (error) {
       next(err);
     }
-
-    //! Bandung
-    // andreas
-
-    //! Depok
-    // adit
-
-    //! Bekasi
-    // fanly
-
     //! ip
     // let lat2 = -6.1741;
     // let lon2 = 106.8296;
