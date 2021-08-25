@@ -1,6 +1,6 @@
 const { User } = require('../models')
 const { checkPassword } = require('../helpers/bcrypt')
-const { signToken } = require('../helpers/jwt')
+const { signToken, verifyToken } = require('../helpers/jwt')
 const { OAuth2Client } = require('google-auth-library')
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
@@ -37,6 +37,17 @@ class ControllerUser {
     }
   }
 
+  static async userLoginned(req, res, next) {
+    try {
+      const access_token = req.headers.access_token
+      const payload = verifyToken(access_token)
+      const { email, role } = payload
+      res.status(200).json({ email, role})
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async googleAuth(req, res, next) {
     try {
       // console.log(req.body.access_token);
@@ -65,6 +76,7 @@ class ControllerUser {
       next(err)
     }
   }
+  
 }
 
 module.exports = ControllerUser

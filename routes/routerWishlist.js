@@ -6,6 +6,5 @@ const { authorizationWishlist } = require('../middlewares/authorization')
 router.use(authentication)
 router.get('/', authorizationWishlist, ControllerWishlist.findWishListsByUserId)
 router.post('/:id', authorizationWishlist, ControllerWishlist.addUserWishlist)
-router.delete('/:id', authorizationWishlist, ControllerWishlist.deleteWishlist)
 
 module.exports = router

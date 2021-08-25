@@ -41,11 +41,11 @@
     "city": "Rome",
     "price": 55000000,
     "image": "https://ik.imagekit.io/iefyzkif2xd/Italia_-_Rome_-_Colloseum_Xb-0NtvqK.jpg",
-    "authorId": 2,
+    "authorId": 1,
     "categoryId": 2
   },
   {
-    "name": "Maldewa Kian Moncer",
+    "name": "Maldewa Kian",
     "country": "Maldives",
     "city": "Maldewa",
     "price": 35000000,
