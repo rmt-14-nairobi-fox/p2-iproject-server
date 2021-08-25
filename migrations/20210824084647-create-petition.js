@@ -44,9 +44,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      expireDate: {
+      maxCount: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
