@@ -10,32 +10,37 @@ const sendEmailQueue = new Queue("send email", "redis://127.0.0.1:6379");
 const { router, setQueues, replaceQueues, addQueue, removeQueue } =
   createBullBoard([new BullAdapter(sendEmailQueue)]);
 
-async function bullSendemail() {
+async function bullSendemail(animal) {
   //* Producer
-  // const job = await myFirstQueue.add({
-  //   foo: 'bar'
-  // });
   const user = await User.findAll();
-  const userEmail = user.map((el) => el.email);
+  const userData = user.map((el) => {
+    return { email: el.email, username: el.username };
+  });
+
   sendEmailQueue.add({
-    email: userEmail,
+    userData,
+    animal,
   });
 }
 
 //* Consumer
-// myFirstQueue.process(async (job) => {
-//   return doSomething(job.data);
-// });
 sendEmailQueue.process(function (job, done) {
   let err = false;
 
-  job.data.email.forEach((userEmail) => {
+  job.data.userData.forEach((user) => {
+    const htmlToSend = `
+      <h1>Hello adopter ${user.username}</h1>
+      <p>Please checkout our new adoption post</p>
+      <h2>Animal name: ${job.data.animal.name}</h2>
+      <h2>Animal kategori: ${job.data.animal.type}</h2>
+      <img src="${job.data.animal.imageUrl}" alt="animal" style="width:500px;height:600px;">
+      img
+    `;
     const mailOpt = {
       from: "andreas160295@gmail.com", // sender address
-      to: userEmail, // list of receivers
+      to: user.email, // list of receivers
       subject: "tes Bulk email", // Subject line
-      text: `tes bulk email success?`, // plain text body
-      // html: "<b>Hello world?</b>", // html body
+      html: htmlToSend, // html body
     };
     let info = transporter.sendMail(mailOpt, (error, information) => {
       if (error) {
