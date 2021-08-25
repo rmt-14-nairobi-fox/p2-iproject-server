@@ -1,4 +1,5 @@
 const getRpPrice = require("../helpers/getRpPrice");
+const { weather } = require("../helpers/weather");
 const { Accommodation, User } = require("../models");
 
 class AccommodationController {
@@ -28,6 +29,7 @@ class AccommodationController {
 
       if (accommodationData) {
         // accommodationData.price = getRpPrice(accommodationData.price);
+
         res.status(200).json(accommodationData);
       } else {
         throw { name: "AccommodationNotFound" };
@@ -121,6 +123,8 @@ class AccommodationController {
           where: {
             id,
           },
+          individualHooks: true,
+          method: "PATCH",
           returning: true,
         });
         res.status(200).json(updatedAccomodation[1][0]);

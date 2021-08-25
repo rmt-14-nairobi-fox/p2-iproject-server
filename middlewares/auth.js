@@ -3,7 +3,6 @@ const { User, Accommodation, SaveAccommodation, Image } = require("../models");
 
 async function auth(req, res, next) {
   const { access_token: accessToken } = req.headers;
-  console.log(accessToken, "<<<<<<<<<<<<<<<<<<<<");
   try {
     if (accessToken) {
       const tokenVerified = verifyToken(accessToken);

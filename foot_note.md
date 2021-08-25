@@ -18,8 +18,8 @@
 
 - cms done only edit some view and add errors
 
+- public done idem with cms
+
 - api doc
 
 - direction coba
-
--AllComm

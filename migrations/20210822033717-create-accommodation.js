@@ -55,6 +55,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      temperature: {
+        type: Sequelize.INTEGER,
+      },
+      weatherDesc: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
