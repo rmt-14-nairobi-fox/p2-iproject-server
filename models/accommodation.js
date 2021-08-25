@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 const { geocode } = require("../helpers/geocode");
+const { weather } = require("../helpers/weather");
 
 module.exports = (sequelize, DataTypes) => {
   class Accommodation extends Model {
@@ -101,6 +102,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      weatherDesc: DataTypes.STRING,
+      temperature: DataTypes.INTEGER,
       long: DataTypes.FLOAT,
       lat: DataTypes.FLOAT,
       type: {
@@ -129,6 +132,13 @@ module.exports = (sequelize, DataTypes) => {
       );
       data.long = getGeoCode.longitude;
       data.lat = getGeoCode.latitude;
+      const getWeather = await weather({
+        lat: getGeoCode.latitude,
+        long: getGeoCode.longitude,
+      });
+
+      data.temperature = getWeather.temperature;
+      data.weatherDesc = getWeather.weather_desc;
     } catch (err) {
       throw new Error();
     }
@@ -142,9 +152,26 @@ module.exports = (sequelize, DataTypes) => {
         );
         data.long = getGeoCode.longitude;
         data.lat = getGeoCode.latitude;
+        const getWeather = await weather({
+          lat: getGeoCode.latitude,
+          long: getGeoCode.longitude,
+        });
+
+        data.temperature = getWeather.temperature;
+        data.weatherDesc = getWeather.weather_desc;
       }
     } catch (err) {
       throw new Error();
+    }
+  });
+
+  Accommodation.beforeUpdate(async (data, opt) => {
+    if (opt.method === "PATCH" && data.status === "inactive") {
+      await sequelize.models.SaveAccommodation.destroy({
+        where: {
+          AccommodationId: +data.id,
+        },
+      });
     }
   });
   return Accommodation;
