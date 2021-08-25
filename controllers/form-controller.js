@@ -1,6 +1,7 @@
 const {
     Farm,
-    Form
+    Form,
+    User
 } = require('../models')
 
 class FormController {
@@ -48,6 +49,32 @@ class FormController {
 
             res.status(200).json(result)
 
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async readAllForm(req, res, next) {
+        try {
+            const result = await Form.findAll({
+                include: [User, Farm]
+            })
+
+            res.status(200).json(result)
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getOneForm(req, res, next) {
+        try {
+            const id = req.params.id
+
+            const result = await Form.findByPk(id)
+
+            res.status(200).json(result)
 
         } catch (err) {
             next(err)
