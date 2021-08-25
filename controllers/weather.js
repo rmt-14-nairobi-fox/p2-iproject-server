@@ -3,8 +3,9 @@ const opm = require('../apis/opm');
 class Controller {
   static async getWeather(req, res, next) {
     try {
+      const { lat, long } = req.body;
       const response = await opm.get(
-        '/weather?q=Jakarta&appid=' + process.env.OPM_KEY
+        `/weather?lat=${lat}&lon=${long}&appid=${process.env.OPM_KEY}`
       );
 
       res.status(200).json(response.data);
