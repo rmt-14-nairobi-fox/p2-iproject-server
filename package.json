@@ -16,5 +16,22 @@
   "bugs": {
     "url": "https://github.com/Handson-coder/p2-iproject-server/issues"
   },
-  "homepage": "https://github.com/Handson-coder/p2-iproject-server#readme"
+  "homepage": "https://github.com/Handson-coder/p2-iproject-server#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "form-data": "^4.0.0",
+    "google-auth-library": "^7.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.3",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "sequelize-cli": "^6.2.0"
+  }
 }
