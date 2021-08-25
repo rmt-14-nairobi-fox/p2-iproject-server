@@ -1,6 +1,8 @@
 const { checkPassword } = require("../helpers/bcrypt")
 const { signToken } = require("../helpers/jwt")
 const { User, Fish, Wishlist } = require("../models")
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client("241740990990-6af197k57lj0bb879vvmr1l7k5ccetrp.apps.googleusercontent.com");
 // const axios = require("axios")
 
 
@@ -41,6 +43,43 @@ class Controller {
             } else {
                 throw ({ name: "Fail Login" })
             }
+        } catch (err) {
+            console.log(err)
+            next(err)
+        }
+    }
+
+    static async googleLogin(req, res, next) {
+        try {
+            // const client = new OAuth2Client("241740990990-t9lc9d7bo3uaa2s6kehsfliebnpasdfq.apps.googleusercontent.com")
+            console.log(req.body)   
+            const ticket = await client.verifyIdToken({
+            idToken: req.body.id_token,
+            audience: "241740990990-6af197k57lj0bb879vvmr1l7k5ccetrp.apps.googleusercontent.com"
+        })
+            const { email, picture, at_hash } = ticket.getPayload()
+            // console.log(ticket.getPayload());
+            // console.log(name, "======================ini name");
+            // console.log(email);
+            // console.log(picture);
+            const [user] = await User.findOrCreate({
+                where: {
+                    email
+                },
+                defaults: {
+                    email: email,
+                    password: at_hash,
+                }
+            })
+        if (user) {
+            const access_token = signToken({
+                id: user.id,
+                email: user.email,
+            })
+            res.status(200).json({access_token, id: user.id, email: user.email})
+        } else {
+            throw ({message: "Not Found"})
+        }
         } catch (err) {
             console.log(err)
             next(err)
@@ -100,13 +139,15 @@ class Controller {
 
     static async getFishById(req, res, next) {
         console.log(req.params.fishName)
+        const fishName = req.params.fishName.split(" ").join("-")
+        console.log(fishName)
         try {
             var http = require('https');
 
             //The url we want is: 'www.random.org/integers/?num=1&min=1&max=10&col=1&base=10&format=plain&rnd=new'
             var options = {
                 host: 'www.fishwatch.gov',
-                path: `/api/species/${req.params.fishName}`
+                path: `/api/species/${fishName}`
             };
 
             let callback = function(response) {
@@ -153,10 +194,12 @@ class Controller {
     static async addFish(req, res, next) {
         console.log(req.user)
         console.log(req.params.fishName)
+        const fishName = req.params.fishName.split(" ").join("-")
+        console.log(fishName)
         try {
             const response = await Wishlist.create({
                 UserId: req.user.id,
-                fishName: req.params.fishName
+                fishName: fishName
             })
             console.log(response)
             res.status(201).json(response)
@@ -180,16 +223,17 @@ class Controller {
 
     static async deleteFish(req, res, next) {
         console.log(req.user)
-        console.log(req.params.id)
+        const fishName = req.params.fishName.split(" ").join("-")
+        console.log(fishName)
         try {
             const response = await Wishlist.destroy(
                 {
                     where: {
-                        id: req.params.id,
+                        fishName: fishName,
                         UserId: req.user.id
             }})
             console.log(response)
-            res.status(200).json({message: `Fish with id ${req.params.id} has been deleted`})
+            res.status(200).json({message: `Fish with name ${fishName} has been deleted`})
         } catch (err) {
             console.log(err)
             next(err)
