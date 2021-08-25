@@ -5,7 +5,9 @@
     "password": "masukaja",
     "phoneNumber": "123456789",
     "address": "dimana aja",
-    "profilePict": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+    "profilePict": "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80",
+    "latitude": "-6.9344694",
+    "longitude": "107.6049539"
   },
   {
     "username": "adit",
@@ -13,7 +15,9 @@
     "password": "masukaja",
     "phoneNumber": "123456789",
     "address": "dimana aja",
-    "profilePict": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+    "profilePict": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80",
+    "latitude": "-6.4071903",
+    "longitude": "106.8158348"
   },
   {
     "username": "fanly",
@@ -21,6 +25,8 @@
     "password": "masukaja",
     "phoneNumber": "123456789",
     "address": "dimana aja",
-    "profilePict": "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80"
+    "profilePict": "https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1234&q=80",
+    "latitude": "-6.2349858",
+    "longitude": "106.9945444"
   }
 ]
