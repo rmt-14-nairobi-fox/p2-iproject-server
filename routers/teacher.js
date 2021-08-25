@@ -1,3 +1,4 @@
+const CalenderController = require('../controllers/calender');
 const TeacherController = require('../controllers/teacher');
 const { authentication, checkTeacher } = require('../middlewares/auth');
 const router = require('express').Router();
@@ -13,5 +14,7 @@ router.put('/score/:idClass/:idStudent', checkTeacher, TeacherController.updateS
 router.patch('/accept/:idClass/:idStudent', checkTeacher, TeacherController.acceptStudent)
 router.patch('/reject/:idClass/:idStudent', checkTeacher, TeacherController.rejectStudent)
 router.delete('/delete/:idClass/:idStudent', checkTeacher, TeacherController.deleteStudent)
+
+router.post('/calender', CalenderController.create)
 
 module.exports = router
