@@ -11,19 +11,16 @@ class CustController {
       });
       res.status(200).json(result);
     } catch (error) {
-      console.log(
-        "🚀 ~ file: customerController.js ~ line 15 ~ CustController ~ showProduct ~ error",
-        error
-      );
       next(error);
     }
   }
   static async serviceAll(req, res, next) {
     try {
-      const result = await Service.findAll();
+      const result = await Service.findAll({
+        order: [["id", "ASC"]],
+      });
       res.status(200).json(result);
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
