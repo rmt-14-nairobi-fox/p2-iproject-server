@@ -2,6 +2,28 @@ const { User, NewsPref, SavedNews } = require('../models');
 const gnews = require('../apis/gnews');
 
 class Controller {
+  static async searchNews(req, res, next) {
+    try {
+      const searchQuery = req.body.searchQuery || null;
+
+      if (searchQuery) {
+        const response = await gnews.get(
+          `/search?q=${searchQuery}&lang=en&token=${process.env.GNEWS_TOKEN}`
+        );
+        res.status(200).json(response.data);
+      } else {
+        const error = new Error();
+        error.name = 'Bad Request';
+        error.message = 'Please provide some keywords';
+
+        throw error;
+      }
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
+
   static async getNews(req, res, next) {
     try {
       const user_id = req.user.id;

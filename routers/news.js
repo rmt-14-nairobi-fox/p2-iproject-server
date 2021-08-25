@@ -9,6 +9,8 @@ router.get('/', Controller.getNews);
 
 router.post('/', Controller.saveNews);
 
+router.post('/search', Controller.searchNews);
+
 router.get('/saved', Controller.getSavedNews);
 
 router.delete('/saved/:savedId', authorization, Controller.deleteSavedNews);

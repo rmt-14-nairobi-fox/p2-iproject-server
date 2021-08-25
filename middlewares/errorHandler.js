@@ -31,6 +31,10 @@ module.exports = function (err, req, res, next) {
     res.status(403).json({
       message: err.message,
     });
+  } else if (err.name === 'Bad Request') {
+    res.status(400).json({
+      message: err.message,
+    });
   } else {
     res.status(500).json(defaultMsg);
   }
