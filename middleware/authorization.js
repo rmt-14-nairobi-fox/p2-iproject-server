@@ -18,4 +18,6 @@ const onlyAdmin = async (req, res, next) => {
     }
 }
 
-module.exports = onlyAdmin;
+module.exports = {
+    onlyAdmin
+}

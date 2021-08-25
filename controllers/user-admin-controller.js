@@ -10,20 +10,21 @@ const {
     signToken
 } = require('../helpers/jwt');
 
-class CustController {
-    static async custRegister(req, res, next) {
+class AdminController {
+    static async adminRegister(req, res, next) {
         try {
             const {
                 email,
-                phone,
                 password
             } = req.body
+
+            const phone = 12345;
 
             const result = await User.create({
                 email,
                 phone,
                 password,
-                role: 'customer'
+                role: 'admin'
             })
 
             const {
@@ -49,7 +50,7 @@ class CustController {
         }
     }
 
-    static async custLogin(req, res, next) {
+    static async adminLogin(req, res, next) {
         try {
             const {
                 email,
@@ -59,7 +60,7 @@ class CustController {
             const result = await User.findOne({
                 where: {
                     email,
-                    role: 'customer'
+                    role: 'admin'
                 }
             })
 
@@ -102,4 +103,4 @@ class CustController {
     }
 }
 
-module.exports = CustController
+module.exports = AdminController
