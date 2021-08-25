@@ -1,8 +1,9 @@
 const Controller = require("../controllers/controller")
-
+const authenticate = require("../middlewares/authentication")
 const router = require("express").Router()
 
-router.post("/add/:id", Controller.addFish)
+router.use(authenticate)
+router.post("/add/:fishName", Controller.addFish)
 router.get("/", Controller.getWishlist)
 router.delete("/:id", Controller.deleteFish)
 
