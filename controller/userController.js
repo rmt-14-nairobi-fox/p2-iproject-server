@@ -43,10 +43,7 @@ class userController {
       });
       res.status(200).json(animals);
     } catch (err) {
-      next({
-        code: 500,
-        name: "serverErr",
-      });
+      next(err);
     }
   }
 
@@ -64,6 +61,43 @@ class userController {
     } catch (err) {
       next(err);
     }
+  }
+
+  static async calculateLocation(req, res, next) {
+    try {
+      const { latitude, longitude } = req.body;
+      const animals = await Animal.findAll({
+        include: [{ model: User, attributes: { exclude: ["password"] } }],
+      });
+
+      animals.forEach((el) => {
+        el.User.distance = User.getDistanceKm(
+          el.User.latitude,
+          el.User.longitude,
+          latitude,
+          longitude
+        );
+      });
+
+      const data = animals.filter((el) => el.User.distance <= 30);
+
+      res.status(200).json(data);
+    } catch (error) {
+      next(err);
+    }
+
+    //! Bandung
+    // andreas
+
+    //! Depok
+    // adit
+
+    //! Bekasi
+    // fanly
+
+    //! ip
+    // let lat2 = -6.1741;
+    // let lon2 = 106.8296;
   }
 }
 

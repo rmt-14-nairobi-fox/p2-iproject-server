@@ -9,6 +9,8 @@ router.use("/admin/queues", bullRouter);
 router.post("/login", userController.login);
 router.get("/animal", userController.getAllanimal);
 
+router.post("/nearbyPost", userController.calculateLocation);
+
 router.use(auth);
 router.post("/animalAdd", userController.createAnimal);
 
