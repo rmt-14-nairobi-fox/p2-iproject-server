@@ -51,6 +51,18 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "City is required",
+          },
+          notEmpty: {
+            msg: "City is required",
+          },
+        },
+      },
       AuthorId: DataTypes.INTEGER,
       description: {
         type: DataTypes.STRING,
@@ -112,9 +124,25 @@ module.exports = (sequelize, DataTypes) => {
 
   Accommodation.beforeCreate(async (data, opt) => {
     try {
-      const getGeoCode = await geocode(data.address + " " + data.zipCode);
+      const getGeoCode = await geocode(
+        data.address + " " + data.city + " " + data.zipCode
+      );
       data.long = getGeoCode.longitude;
       data.lat = getGeoCode.latitude;
+    } catch (err) {
+      throw new Error();
+    }
+  });
+
+  Accommodation.beforeUpdate(async (data, opt) => {
+    try {
+      if (opt.method === "PUT") {
+        const getGeoCode = await geocode(
+          data.address + " " + data.city + " " + data.zipCode
+        );
+        data.long = getGeoCode.longitude;
+        data.lat = getGeoCode.latitude;
+      }
     } catch (err) {
       throw new Error();
     }

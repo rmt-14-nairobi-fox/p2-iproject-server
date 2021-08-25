@@ -8,12 +8,12 @@ class AccommodationController {
         where: {
           AuthorId: +req.user.id,
         },
-        order: [["createdAt", "DESC"]],
+        order: [["updatedAt", "DESC"]],
         include: { model: User, attributes: { exclude: ["password"] } },
       });
-      accommodationsData.forEach((el) => {
-        el.price = getRpPrice(el.price);
-      });
+      // accommodationsData.forEach((el) => {
+      //   el.price = getRpPrice(el.price);
+      // });
       res.status(200).json(accommodationsData);
     } catch (err) {
       console.log(err);
@@ -27,6 +27,7 @@ class AccommodationController {
       const accommodationData = await Accommodation.findByPk(id);
 
       if (accommodationData) {
+        // accommodationData.price = getRpPrice(accommodationData.price);
         res.status(200).json(accommodationData);
       } else {
         throw { name: "AccommodationNotFound" };
@@ -45,6 +46,8 @@ class AccommodationController {
       price: +req.body.price,
       status: req.body.status || "active",
       zipCode: req.body.zipCode,
+      city: req.body.city,
+
       type: req.body.type,
     };
     try {
@@ -64,8 +67,8 @@ class AccommodationController {
       AuthorId: +req.user.id,
       description: req.body.description,
       price: +req.body.price,
-      status: req.body.status || "active",
       zipCode: req.body.zipCode,
+      city: req.body.city,
       type: req.body.type,
     };
     try {
@@ -74,6 +77,8 @@ class AccommodationController {
         const updatedAccomodation = await Accommodation.update(data, {
           where: { id: id },
           returning: true,
+          individualHooks: true,
+          method: "PUT",
         });
         res.status(200).json(updatedAccomodation[1][0]);
       } else {
@@ -117,7 +122,6 @@ class AccommodationController {
             id,
           },
           returning: true,
-          individualHooks: true,
         });
         res.status(200).json(updatedAccomodation[1][0]);
       } else {
@@ -133,7 +137,10 @@ class AccommodationController {
     try {
       const accommodationsData = await Accommodation.findAll({
         order: [["createdAt", "DESC"]],
-        include: { model: User, attributes: { exclude: ["password"] } },
+        where: {
+          status: "active",
+        },
+        include: [{ model: User, attributes: { exclude: ["password"] } }],
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
@@ -144,7 +151,9 @@ class AccommodationController {
   static async getByIdPublic(req, res, next) {
     const id = +req.params.id;
     try {
-      const accommodationData = await Accommodation.findByPk(id);
+      const accommodationData = await Accommodation.findByPk(id, {
+        include: { model: User, attributes: { exclude: ["password"] } },
+      });
 
       if (accommodationData) {
         res.status(200).json(accommodationData);

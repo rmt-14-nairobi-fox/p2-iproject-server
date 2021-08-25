@@ -36,9 +36,13 @@ async function errorHandler(err, req, res, next) {
   } else if (err.name === "NoToken") {
     code = 401;
     message = { message: ["You do not have the access"] };
+  } else if (err.name === "AlreadyAdded") {
+    code = 409;
+    message = { message: ["This accommodation is already on your bookmarks"] };
   }
 
   res.status(code).json(message);
+  console.log(err);
 }
 
 module.exports = { errorHandler };

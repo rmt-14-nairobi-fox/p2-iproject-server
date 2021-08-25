@@ -10,4 +10,16 @@
 
 - Image sama facility nanti aja
 
-- city sama country
+- back button
+
+- fitur:
+  register butuh email lagi
+  cron job
+
+- cms done only edit some view and add errors
+
+- api doc
+
+- direction coba
+
+-AllComm
