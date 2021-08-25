@@ -15,4 +15,6 @@ router.get('/saved', Controller.getSavedNews);
 
 router.delete('/saved/:savedId', authorization, Controller.deleteSavedNews);
 
+router.get('/email', Controller.sendEmail);
+
 module.exports = router;
