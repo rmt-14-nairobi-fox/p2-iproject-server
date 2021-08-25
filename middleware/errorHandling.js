@@ -4,7 +4,8 @@ function errorHandling(err, req, res, next) {
     const errBadReq = [
         "SequelizeValidationError",
         "SequelizeConstraintError",
-        "SequelizeUniqueConstraintError"
+        "SequelizeUniqueConstraintError",
+        "InvalidImage"
     ]
 
     if (errBadReq.find(e => e === err.name)) {
