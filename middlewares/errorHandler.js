@@ -17,6 +17,11 @@ const errorHandler = (err, req, res, next) => {
             code = 400
             break;
         
+        case 'Unauthorized':
+            message.push(err.message)
+            code = 401
+            break;
+        
         default:
             console.log(err);
             message = err.message || 'Internal Server error'
