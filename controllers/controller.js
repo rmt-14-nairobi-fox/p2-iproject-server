@@ -2,7 +2,7 @@ const { checkPassword } = require("../helpers/bcrypt")
 const { signToken } = require("../helpers/jwt")
 const { User, Fish, Wishlist } = require("../models")
 const {OAuth2Client} = require('google-auth-library');
-const client = new OAuth2Client("241740990990-6af197k57lj0bb879vvmr1l7k5ccetrp.apps.googleusercontent.com");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT);
 // const axios = require("axios")
 
 
@@ -55,7 +55,7 @@ class Controller {
             console.log(req.body)   
             const ticket = await client.verifyIdToken({
             idToken: req.body.id_token,
-            audience: "241740990990-6af197k57lj0bb879vvmr1l7k5ccetrp.apps.googleusercontent.com"
+            audience: process.env.GOOGLE_CLIENT
         })
             const { email, picture, at_hash } = ticket.getPayload()
             // console.log(ticket.getPayload());
