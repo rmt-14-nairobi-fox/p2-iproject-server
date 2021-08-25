@@ -1,7 +1,11 @@
 const {
+    readAllFarmOpt
+} = require('../helpers/optionsHelper');
+const {
     Farm,
     Type,
-    User
+    User,
+    Form
 } = require('../models')
 
 class FarmController {
@@ -38,6 +42,43 @@ class FarmController {
         }
     }
 
+    static async readAllFarm(req, res, next) {
+        try {
+            const {
+                id,
+                role
+            } = req.user;
+
+            const options = readAllFarmOpt(role, id)
+
+            const result = await Farm.findAll({
+                ...options,
+                include: [{
+                        model: User,
+                        attributes: {
+                            exclude: ['password']
+                        }
+                    },
+                    Type
+                ]
+            });
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async getOneFarm(req, res, next) {
+        try {
+            res.status(200).json(req.farm)
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
     static async readCustFarm(req, res, next) {
         try {
             const {
@@ -61,37 +102,83 @@ class FarmController {
         }
     }
 
-    static async readAllFarm(req, res, next) {
+    static async editFarm(req, res, next) {
         try {
-            const result = await Farm.findAll({
-                include: [Type, User],
-                order: [
-                    ['updatedAt', 'DESC']
-                ]
+            const {
+                email
+            } = req.user
+
+            const farmId = req.params.farmId
+
+            const {
+                name,
+                location,
+                area,
+                formId
+            } = req.body
+
+            const result = await Farm.update({
+                name,
+                location,
+                area
+            }, {
+                where: {
+                    id: farmId
+                },
+                returning: true,
             });
 
-            res.status(200).json(result);
+            if (!result[0]) {
+                throw {
+                    name: "NotFound",
+                }
+            }
+
+            await Form.update({
+                status: 'updated',
+                admin: email
+            }, {
+                where: {
+                    id: formId
+                }
+            })
+
+            res.status(200).json(result[1][0]);
 
         } catch (err) {
             next(err)
         }
     }
 
-    // refactor nnti di find all farm
-    static async readFarmByUser(req, res, next) {
+    static async deleteFarm(req, res, next) {
         try {
-            const UserId = req.body.UserId
+            const formId = req.body.formId;
+            const farmId = req.params.farmId;
+            const {
+                email
+            } = req.user;
 
-            const result = await Farm.findAll({
+            await Type.destroy({
                 where: {
-                    UserId
+                    id: farmId
+                },
+            });
+
+            await Form.update({
+                status: 'deleted',
+                admin: email
+            }, {
+                where: {
+                    id: formId
                 }
             })
 
-            res.status(200).json(result);
+            res.status(200).json({
+                message: "Farm success to delete",
+            });
 
         } catch (err) {
-            next(err)
+            next(err);
         }
     }
 }

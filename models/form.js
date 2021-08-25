@@ -11,20 +11,42 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Form.belongsTo(models.User)
-      Form.belongsTo(models.Farm)
     }
   };
   Form.init({
+    user: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'user cannot be empty'
+        },
+        notNull: {
+          msg: 'user cannot be empty'
+        }
+      }
+    },
+    number: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'number cannot be empty'
+        },
+        notNull: {
+          msg: 'number cannot be empty'
+        }
+      }
+    },
     UserId: {
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'UserId cannot be empty'
+          msg: 'userId cannot be empty'
         },
         notNull: {
-          msg: 'UserId cannot be empty'
+          msg: 'userId cannot be empty'
         }
       }
     },
@@ -33,10 +55,22 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: {
-          msg: 'FarmId cannot be empty'
+          msg: 'farmId cannot be empty'
         },
         notNull: {
-          msg: 'FarmId cannot be empty'
+          msg: 'farmId cannot be empty'
+        }
+      }
+    },
+    farmName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: 'farmName cannot be empty'
+        },
+        notNull: {
+          msg: 'farmName cannot be empty'
         }
       }
     },
