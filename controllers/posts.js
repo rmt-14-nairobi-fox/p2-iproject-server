@@ -1,4 +1,4 @@
-const { Post, SavedNews } = require('../models');
+const { Post, SavedNews, User } = require('../models');
 
 class Controller {
   static async getPosts(req, res, next) {
@@ -7,7 +7,11 @@ class Controller {
         include: [
           {
             model: SavedNews,
-            attributes: ['title'],
+            attributes: ['title', 'image'],
+          },
+          {
+            model: User,
+            attributes: ['name', 'imgUrl'],
           },
         ],
         order: [['createdAt', 'DESC']],
@@ -31,7 +35,7 @@ class Controller {
         include: [
           {
             model: SavedNews,
-            attributes: ['title'],
+            attributes: ['title', 'image'],
           },
         ],
         order: [['createdAt', 'DESC']],
