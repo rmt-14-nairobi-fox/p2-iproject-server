@@ -6,6 +6,7 @@ const postsRouter = require('./posts');
 const commentsRouter = require('./comments');
 const coronaRouter = require('./corona');
 const weatherRouter = require('./weather');
+const errorHandler = require('../middlewares/errorHandler');
 
 router.use('/newsprefs', newsPrefsRouter);
 
@@ -20,5 +21,7 @@ router.use('/comments', commentsRouter);
 router.use('/corona', coronaRouter);
 
 router.use('/weather', weatherRouter);
+
+router.use(errorHandler);
 
 module.exports = router;

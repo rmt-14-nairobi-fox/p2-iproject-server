@@ -4,7 +4,7 @@ class Controller {
   static async getNewsPrefs(req, res, next) {
     try {
       const response = await NewsPref.findAll({
-        attributes: ['name'],
+        attributes: ['id', 'name'],
       });
 
       res.status(200).json(response);
