@@ -1,6 +1,6 @@
 const getRpPrice = require("../helpers/getRpPrice");
 const { weather } = require("../helpers/weather");
-const { Accommodation, User } = require("../models");
+const { Accommodation, User, Image } = require("../models");
 
 class AccommodationController {
   static async getAll(req, res, next) {
@@ -144,7 +144,10 @@ class AccommodationController {
         where: {
           status: "active",
         },
-        include: [{ model: User, attributes: { exclude: ["password"] } }],
+        include: [
+          { model: User, attributes: { exclude: ["password"] } },
+          { model: Image },
+        ],
       });
       res.status(200).json(accommodationsData);
     } catch (err) {
