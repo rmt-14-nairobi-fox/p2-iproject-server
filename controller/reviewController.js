@@ -83,7 +83,7 @@ class reviewController {
         await Review.destroy({
           where: { id: id },
         });
-        res.status(200).json({ message: "review has ben delete" });
+        res.status(200).json({ message: "review has been delete" });
       } else {
         throw { name: "NotFound" };
       }

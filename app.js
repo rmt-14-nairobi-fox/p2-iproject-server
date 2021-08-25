@@ -7,14 +7,26 @@ const express = require("express");
 const router = require("./router/index");
 const app = express();
 const port = process.env.PORT || 3000;
-
+const httpServer = require("http").createServer(app);
+const io = require("socket.io")(httpServer);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(router);
 
-app.listen(port, () => {
-  console.log("run", port);
+io.on("connection", (socket) => {
+  console.log("user Connected");
+  socket.on("sendMessage", (data) => {
+    socket.broadcast.emit("broadcastMessage", data);
+  });
 });
+
+httpServer.listen(port, () => {
+  console.log("runing" + port);
+});
+
+// app.listen(port, () => {
+//   console.log("run", port);
+// });
 
 module.exports = app;
