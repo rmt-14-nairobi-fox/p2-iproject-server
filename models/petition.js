@@ -102,15 +102,15 @@ module.exports = (sequelize, DataTypes) => {
         }        
       }
     },
-    expireDate: {
-      type: DataTypes.DATE,
+    maxCount: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notNull: {
-          msg: 'Petition.expireDate cannot be null'
+          msg: 'Petition.maxCount cannot be null'
         },
         notEmpty: {
-          msg: 'Petition.expireDate cannot be empty'
+          msg: 'Petition.maxCount cannot be empty'
         }        
       }
     }
