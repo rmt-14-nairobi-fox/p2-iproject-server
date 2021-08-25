@@ -12,6 +12,17 @@ let apiClient = new midtransClient.Snap({
   clientKey: process.env.MIDTRANS_CLIENT_KEY,
 });
 class OrderController {
+  static async fetchOrderById(req, res, next) {
+    try {
+      const response = await Order.findByPk(req.params.id, {
+        include: [{ model: OrderDetail, include: [Product] }],
+      });
+      res.status(200).json(response);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
   static async notifPayment(req, res, next) {
     try {
       let order_id = +req.body.order_id;
@@ -53,7 +64,6 @@ class OrderController {
         where: {
           CustomerId: req.user.id,
         },
-        include: [{ model: OrderDetail, include: [Product] }],
       });
 
       res.status(200).json(orders);
@@ -100,6 +110,7 @@ class OrderController {
       };
       const transaction = await snap.createTransaction(parameter);
       let transactionToken = transaction.token;
+      //update database masukin token
       res.status(200).json(transactionToken);
     } catch (error) {
       console.log(error, "<<<<<<<<<");
