@@ -1,6 +1,7 @@
 const {
     Farm,
-    Type
+    Type,
+    User
 } = require('../models')
 
 class FarmController {
@@ -52,6 +53,40 @@ class FarmController {
                     ['updatedAt', 'DESC']
                 ]
             });
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    static async readAllFarm(req, res, next) {
+        try {
+            const result = await Farm.findAll({
+                include: [Type, User],
+                order: [
+                    ['updatedAt', 'DESC']
+                ]
+            });
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            next(err)
+        }
+    }
+
+    // refactor nnti di find all farm
+    static async readFarmByUser(req, res, next) {
+        try {
+            const UserId = req.body.UserId
+
+            const result = await Farm.findAll({
+                where: {
+                    UserId
+                }
+            })
 
             res.status(200).json(result);
 

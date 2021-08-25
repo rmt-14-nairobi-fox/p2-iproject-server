@@ -13,7 +13,7 @@ const onlyAdmin = async (req, res, next) => {
 
         next();
 
-    } catch (error) {
+    } catch (err) {
         next(err)
     }
 }

@@ -18,7 +18,7 @@ function errorHandling(err, req, res, next) {
 
     } else if (err.name === 'Forbidden') {
         code = 403;
-        message.push(err.message);
+        msg.push(err.msg);
 
     } else {
         code = 500;
