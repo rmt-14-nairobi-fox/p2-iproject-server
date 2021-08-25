@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Lion Air",
+        "destination": "Bali",
+        "price": "500000",
+        "imageUrl": "https://media.suara.com/pictures/970x544/2018/10/29/45106-pesawat-lion-air-jatuh-di-perairan-tanjung-karawang-instagram.jpg",
+        "authorId": 1
+    },
+    {
+        "name": "Garuda Air",
+        "destination": "Surabaya",
+        "price": "700000",
+        "imageUrl": "https://www.garuda-indonesia.com/content/dam/garuda/main-banner/company-profile.jpg",
+        "authorId": 1
+    },
+    {
+        "name": "Air Asia",
+        "destination": "Lombok",
+        "price": "600000",
+        "imageUrl": "https://rmol.id/images/berita/normal/2020/12/496904_09563625122020_Indonesia-AirAsia.jpg",
+        "authorId": 1
+    }
+]
