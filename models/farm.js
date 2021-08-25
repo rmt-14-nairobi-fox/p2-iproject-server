@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Farm.belongsTo(model.User)
-      Farm.belongsTo(model.Type)
+      Farm.belongsTo(models.User)
+      Farm.belongsTo(models.Type)
       Farm.hasMany(models.Form)
     }
   };
