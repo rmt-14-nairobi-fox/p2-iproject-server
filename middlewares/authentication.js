@@ -16,7 +16,7 @@ const authentication = (req, res, next) => {
                     next()
                 })
                 .catch(err => {
-                    throw {status: 401, message: 'Invalid Token'}
+                    throw {name: 'Invalid Token'}
                 })
         } else {
             throw { name: 'Please Login First' }

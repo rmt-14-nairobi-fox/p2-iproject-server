@@ -786,22 +786,20 @@ _Response (500 - Internal Server Error)_
 
 ---
 
-### Delete /wishlists/:id
+### Get /users
 
 _Request Header_
 
 ```
 {
-  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJjdXN0b21lckBtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTYyOTg2NDE5N30.2a6UtF4IBS9ShvuW66nbNnEJJE8tEnvqT2N7NuW4AzM"
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJjdXN0b21lckBtYWlsLmNvbSIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTYyOTg5ODM3Mn0._xR4nkEJiqSyzbXHxGG9Vhw8OVQE-vDd5Fp93NOMc3o"
 }
 ```
 
 _Request Params_
 
 ```
-{
-  "id": "<id to get insert into>"
-}
+not needed
 ```
 
 _Request Body_
@@ -810,29 +808,23 @@ _Request Body_
 not needed
 ```
 
-_Response (200 - Deleted)_
+_Response (200 - Success)_
 
 ```
 {
-  "message": "Wishlist has been deleted"
+  "email": "customer@mail.com",
+  "role": "customer"
 }
 ```
 
-_Response (403 - Forbidden)_
+_Response (401 - unauthorized)_
 
 ```
 {
-  "message": "Forbidden"
+  "message": "Please Login First"
 }
 ```
 
-_Response (404 - Not Found)_
-
-```
-{
-  "message": "Data not found"
-}
-```
 
 _Response (500 - Internal Server Error)_
 
