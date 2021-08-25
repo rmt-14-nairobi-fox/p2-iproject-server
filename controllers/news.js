@@ -1,5 +1,6 @@
 const { User, NewsPref, SavedNews } = require('../models');
 const gnews = require('../apis/gnews');
+const mail = require('../config/nodemailer');
 
 class Controller {
   static async searchNews(req, res, next) {
@@ -98,6 +99,53 @@ class Controller {
       });
 
       res.status(200).json({ message: 'Saved news deleted successfully' });
+    } catch (err) {
+      err.endpoint = req.baseUrl;
+      next(err);
+    }
+  }
+
+  static async sendEmail(req, res, next) {
+    try {
+      const user_id = req.user.id;
+      const user_email = req.user.email;
+      const result = await SavedNews.findAll({
+        where: {
+          user_id,
+        },
+        attributes: ['title', 'url'],
+      });
+
+      if (result.length) {
+        let emailText = '';
+
+        result.forEach((news, i) => {
+          emailText += `${i + 1}. ${news.title}\nLink: ${news.url}\n\n`;
+        });
+
+        let mailDetails = {
+          from: 'the.newromantimes21@gmail.com',
+          to: user_email,
+          subject: 'Your Saved News at The New Roman Times',
+          text: emailText,
+        };
+
+        mail.sendMail(mailDetails, function (err, data) {
+          if (err) {
+            throw err;
+          } else {
+            res.status(200).json({
+              message: 'Email sent',
+            });
+          }
+        });
+      } else {
+        const error = new Error();
+        error.name = 'Not Found';
+        error.message = "You don't have any saved news";
+
+        throw error;
+      }
     } catch (err) {
       err.endpoint = req.baseUrl;
       next(err);
