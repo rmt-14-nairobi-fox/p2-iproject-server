@@ -32,7 +32,8 @@ class Controller {
 
   static async login(req, res, next) {
     try {
-      const { email, password } = req.body;
+      const email = req.body.email || '';
+      const password = req.body.password || '';
 
       const find = await User.findOne({
         where: {
