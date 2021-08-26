@@ -87,7 +87,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Petition.signCount cannot be empty'
-        }        
+        }
       }
     },
     status: {
@@ -111,7 +111,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         notEmpty: {
           msg: 'Petition.maxCount cannot be empty'
-        }        
+        },
+        min: {
+          args: 2,
+          msg: 'Minimum value for Petition.maxCount are 2'
+        }
       }
     }
   }, {
