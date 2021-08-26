@@ -168,50 +168,56 @@ module.exports = (sequelize, DataTypes) => {
 
   Accommodation.beforeUpdate(async (data, opt) => {
     if (opt.method === "PATCH" && data.status === "inactive") {
-      // sequelize.models.SaveAccommodation.findAll({
-      //   where: {
-      //     UserId: +data.AuthorId,
-      //   },
-      // })
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
+      const foundUser = await sequelize.models.SaveAccommodation.findAll({
+        include: [
+          {
+            model: sequelize.models.User,
+            attributes: { exclude: ["password"] },
+          },
+          { model: sequelize.models.Accommodation },
+        ],
+
+        where: {
+          AccommodationId: +data.id,
+        },
+      });
+
+      const emailUser = foundUser.map((el) => {
+        return el.User.email;
+      });
+
+      const nameAccommodation = foundUser.map((el) => {
+        return el.Accommodation.title;
+      });
+
       await sequelize.models.SaveAccommodation.destroy({
         where: {
           AccommodationId: +data.id,
         },
       });
 
-      // const onlyName = foundUser.map((el) => {
-      //   return sequelize.models.User.findByPk(+el.id)
-      //   return el.name;
-      // });
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.EMAIL_NODEMAILER,
+          pass: process.env.PASSWORD_EMAIL_NODEMAILER,
+        },
+      });
 
-      // let transporter = nodemailer.createTransport({
-      //   service: "gmail",
-      //   auth: {
-      //     user: process.env.EMAIL_NODEMAILER,
-      //     pass: process.env.PASSWORD_EMAIL_NODEMAILER,
-      //   },
-      // });
+      let mailOpt = {
+        from: "admin@allcomm.com",
+        to: `${emailUser.join(",")}`,
+        subject: "only testing",
+        text: `Sorry. Apartment with the title ${nameAccommodation[0]} has been rented to someone else. We send you a messsage because you save this apartment in your bookmarks`,
+      };
 
-      // let mailOpt = {
-      //   from: "admin@allcomm.com",
-      //   to: "katamune.hattori@gmail.com",
-      //   subject: "only testing",
-      //   text: "Leider! Jemand hat schon dieses Apartment/Haus gemietet! Entschuldigung Bruder!! :(",
-      // };
-
-      // transporter.sendMail(mailOpt, function (err, data) {
-      //   if (err) {
-      //     console.log("Err", "<<<<<<");
-      //   } else {
-      //     console.log("Email sent!", "<<<<<<<");
-      //   }
-      // });
+      transporter.sendMail(mailOpt, function (err, data) {
+        if (err) {
+          console.log("Err", "<<<<<<");
+        } else {
+          console.log("Email sent!", "<<<<<<<");
+        }
+      });
     }
   });
   return Accommodation;
