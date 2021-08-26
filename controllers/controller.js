@@ -7,6 +7,7 @@ class Controller {
             const {
                 location
             } = req.body;
+            console.log(location);
             const privateKey = process.env.WEATHER_KEY
 
             const result = await axios.get("http://api.weatherapi.com/v1/current.json", {
@@ -17,7 +18,14 @@ class Controller {
                 }
             })
 
-            res.status(200).json(result.data.current)
+            res.status(200).json({
+                name: result.data.location.name,
+                region: result.data.location.region,
+                country: result.data.location.country,
+                tempC: result.data.current.temp_c,
+                icon: 'https:' + result.data.current.condition.icon,
+                condition: result.data.current.condition.text
+            })
 
         } catch (err) {
             res.send(err)

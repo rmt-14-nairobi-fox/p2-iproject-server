@@ -1,5 +1,7 @@
 const {
-    Farm
+    Farm,
+    User,
+    Type
 } = require('../models')
 
 const onlyAdmin = async (req, res, next) => {
@@ -30,7 +32,9 @@ const authZ = async (req, res, next) => {
         } = req.user;
 
         const farmId = +req.params.farmId;
-        const result = await Farm.findByPk(farmId)
+        const result = await Farm.findByPk(farmId, {
+            include: [User, Type]
+        })
 
         if (!result) {
             throw ({
