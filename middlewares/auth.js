@@ -13,7 +13,7 @@ function authentication(req, res, next){
 				email : payload.email
 			}
 			next()
-		}
+		}	
 	}
 	catch(err){
 		next(err)
