@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Tanah Lot",
+    "country": "Indonesia",
+    "city": "Bali",
+    "price": 10500000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Tanah_Lot_-_Bali_R_02oL8Sz.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Disney Land",
+    "country": "Hongkong",
+    "city": "Penny Bay",
+    "price": 9500000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Disney_Land_-_Hongkong_-_Penny_Bay_aAA9Eqqsb.webp",
+    "authorId": 1,
+    "categoryId": 2
+  },
+  {
+    "name": "Pulau Lombok",
+    "country": "Indonesia",
+    "city": "Lombok",
+    "price": 8400000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Pulau_Lombok_-Lombok_-waZLL1_5.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Lake Toba",
+    "country": "Indonesia",
+    "city": "Medan",
+    "price": 5300000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/lake_toba_-_Medan_F1OSSTxEg.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Colloseum",
+    "country": "Italia",
+    "city": "Rome",
+    "price": 55000000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Italia_-_Rome_-_Colloseum_Xb-0NtvqK.jpg",
+    "authorId": 1,
+    "categoryId": 2
+  },
+  {
+    "name": "Maldewa Kian",
+    "country": "Maldives",
+    "city": "Maldewa",
+    "price": 35000000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Maladewa_Kian_Moncer_-_Maldives_-_Maladewa_-c4Np9X0x.jpg",
+    "authorId": 1,
+    "categoryId": 2
+  },
+  {
+    "name": "Gunung Bromo",
+    "country": "Indonesia",
+    "city": "Malang",
+    "price": 5000000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Gunung_bromo_-_Malang_CXIu20srm.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Bukit Lawang",
+    "country": "Indonesia",
+    "city": "Medan",
+    "price": 6500000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Bukit_lawang_-_Medan_C5pdCcOXt.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Candi Borobudur",
+    "country": "Indonesia",
+    "city": "Yogyakarta",
+    "price": 7800000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Borobudur_Jogja_QFvwckrvf.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  },
+  {
+    "name": "Toraja",
+    "country": "Indonesia",
+    "city": "Makasar",
+    "price": 4900000,
+    "image": "https://ik.imagekit.io/iefyzkif2xd/Toraja_-_Makasar_kYfc1W_Ps.jpg",
+    "authorId": 1,
+    "categoryId": 1
+  }
+]
