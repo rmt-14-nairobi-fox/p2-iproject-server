@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Bitcoin",
+    "symbol": "BTC"
+  },
+  {
+    "name": "LiteCoin",
+    "symbol": "LTC"
+  },
+  {
+    "name": "Ethereum",
+    "symbol": "ETH"
+  },
+  {
+    "name": "EthereumClassic",
+    "symbol": "ETC"
+  },
+  {
+    "name": "Zcash",
+    "symbol": "ZEC"
+  },
+  {
+    "name": "Monero",
+    "symbol": "XMR"
+  },
+  {
+    "name": "LiteCoin",
+    "symbol": "LTC"
+  },
+  {
+    "name": "Dash",
+    "symbol": "DSH"
+  }
+]

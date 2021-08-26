@@ -1,0 +1,35 @@
+{
+  "name": "p2-iproject-server-1",
+  "version": "1.0.0",
+  "description": "Individual Portfolio Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baskoropandu/p2-iproject-server-1.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baskoropandu/p2-iproject-server-1/issues"
+  },
+  "homepage": "https://github.com/baskoropandu/p2-iproject-server-1#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "node-cron": "^3.0.0",
+    "nodemailer": "^6.6.3",
+    "nodemon": "^2.0.12",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
+  }
+}
