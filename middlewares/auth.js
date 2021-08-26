@@ -32,10 +32,13 @@ const noRepeatSign = async (req, res, next) => {
     let petitionId = +req.params.id
     let userId = req.user.id
 
-    console.log(petitionId, '*******PETITION ID');
-    console.log(userId, '*******USER ID');
     try {
-        const petition = await Petition.findByPk(petitionId)
+        const petition = await Petition.findByPk(petitionId, {
+            include: {
+                model: User,
+                attributes: ['email']
+            }
+        })
         if (!petition) {
             throw ({
                 name: 'NotFound',
@@ -44,17 +47,21 @@ const noRepeatSign = async (req, res, next) => {
         } else {
             const sign = await Sign.findOne({
                 where: {
+                    petitionId,
                     userId
                 }
             })
 
-            console.log(sign, '===== ini isi sign');
             if (sign) {
                 throw ({
                     name: 'Forbidden',
                     message: 'You already sign this petition'
                 })
             } else {
+                req.petition = {
+                    email: petition.User.email,
+                    title: petition.title
+                }
                 next()
             }
         }
