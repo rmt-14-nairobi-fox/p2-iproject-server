@@ -1,5 +1,6 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
+const checkEmail = require('../helpers/mailboxlayer');
 const getPredikat = require('../helpers/predikat');
 const { Teacher, Class, StudentClass, Student } = require('../models');
 
@@ -7,10 +8,15 @@ class TeacherController {
     static async register(req, res, next) {
         const { email, password, name, phoneNumber } = req.body
         try {
-            const result = await Teacher.create({
-                email, password, name, phoneNumber, role: 'teacher'
-            })
-            res.status(201).json({ email: result.email, name: result.name })
+            const niceEmail = await checkEmail(email)
+            if (niceEmail.data.did_you_mean === '' || niceEmail.data.did_you_mean === undefined) {
+                const result = await Teacher.create({
+                    email, password, name, phoneNumber, role: 'teacher'
+                })
+                res.status(201).json({ email: result.email, name: result.name })
+            } else {
+                throw { name: 'Did You Mean', message: niceEmail.data.did_you_mean }
+            }
         } catch (err) {
             next(err)
         }
@@ -26,7 +32,7 @@ class TeacherController {
                         email: teacher.email,
                         role: teacher.role
                     })
-                    res.status(200).json({ access_token })
+                    res.status(200).json({ access_token, role: teacher.role })
                 } else {
                     throw { name: 'Wrong Email/Password' }
                 }
@@ -55,15 +61,19 @@ class TeacherController {
     }
     static async getStudentClass(req, res, next) {
         const { idClass } = req.params
-        const idTeacher = req.user.id
         try {
             const classes = await Class.findByPk(idClass)
             if (classes) {
                 const result = await StudentClass.findAll({
                     where: {
-                        ClassId: idClass,
-                        TeacherId: idTeacher,
+                        ClassId: classes.id,
                         status: 'accepted'
+                    },
+                    include: {
+                        model: Student,
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt', 'password']
+                        }
                     }
                 })
                 res.status(200).json(result)
@@ -77,14 +87,20 @@ class TeacherController {
     static async getStudentWaiting(req, res, next) {
         const { idClass } = req.params
         const idTeacher = req.user.id
+        console.log(idClass, idTeacher)
         try {
             const classes = await Class.findByPk(idClass)
             if (classes) {
                 const result = await StudentClass.findAll({
                     where: {
-                        ClassId: idClass,
-                        TeacherId: idTeacher,
+                        ClassId: classes.id,
                         status: 'waiting'
+                    },
+                    include: {
+                        model: Student,
+                        attributes: {
+                            exclude: ['createdAt', 'updatedAt', 'password']
+                        }
                     }
                 })
                 res.status(200).json(result)
@@ -187,6 +203,26 @@ class TeacherController {
             next(err)
         }
     }
+    static async getOne(req, res, next) {
+        const { idClass, idStudent } = req.params
+        try {
+            const result = await StudentClass.findOne({
+                where: {
+                    ClassId: idClass,
+                    StudentId: idStudent
+                },
+                include: {
+                    model: Student,
+                    attributes: {
+                        exclude: ['password', 'createdAt', 'updatedAt']
+                    }
+                },
+            })
+            res.status(200).json(result)
+        } catch (err) {
+            next(err)
+        }
+    }
     static async updateScore(req, res, next) {
         const { idClass, idStudent } = req.params
         const { score1, score2, score3, score4, score5, note } = req.body
@@ -217,6 +253,7 @@ class TeacherController {
             }
         } catch (err) {
             next(err)
+            console.log(err)
         }
     }
 }

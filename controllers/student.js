@@ -1,15 +1,21 @@
 const { comparePassword } = require('../helpers/bcrypt');
 const { signToken } = require('../helpers/jwt');
+const checkEmail = require('../helpers/mailboxlayer');
 const { Teacher, Student, Class, StudentClass } = require('../models');
 
 class StudentController {
     static async register(req, res, next) {
         const { email, password, name, phoneNumber } = req.body
         try {
-            const result = await Student.create({
-                email, password, name, phoneNumber, role: 'student'
-            })
-            res.status(201).json({ email: result.email, name: result.name })
+            const niceEmail = await checkEmail(email)
+            if (niceEmail.data.did_you_mean === '' || niceEmail.data.did_you_mean === undefined) {
+                const result = await Student.create({
+                    email, password, name, phoneNumber, role: 'student'
+                })
+                res.status(201).json({ email: result.email, name: result.name })
+            } else {
+                throw { name: 'Did You Mean', message: niceEmail.data.did_you_mean }
+            }
         } catch (err) {
             next(err)
         }
@@ -25,7 +31,7 @@ class StudentController {
                         email: student.email,
                         role: student.role
                     })
-                    res.status(200).json({ access_token })
+                    res.status(200).json({ access_token, role: student.role })
                 } else {
                     throw { name: 'Wrong Email/Password' }
                 }

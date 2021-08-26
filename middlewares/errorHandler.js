@@ -29,7 +29,7 @@ function errorHandler(err, req, res, next) {
             }
             break;
         case 'Wrong Email/Password':
-            res.status(400).json({ message: 'Please Login First' })
+            res.status(400).json({ message: 'Wrong Email or Password' })
             break;
         case 'Forbidden Add Class':
             res.status(403).json({ message: 'Only teachers can add class' })
@@ -45,6 +45,9 @@ function errorHandler(err, req, res, next) {
             break;
         case 'Not Found':
             res.status(404).json({ message: 'Data Not Found' })
+            break;
+        case 'Did You Mean':
+            res.status(400).json({ message: 'Did you mean ' + err.message + ' ?' })
             break;
         default:
             res.status(500).json({ message: 'Internal Server Error' })
