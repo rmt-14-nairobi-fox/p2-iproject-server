@@ -1,6 +1,8 @@
 const { checkPassword } = require("../helpers/bcrypt");
 const { signToken } = require("../helpers/jwt");
 const { User } = require("../models");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 class UserController {
   // ! CMS SIDE
@@ -229,6 +231,64 @@ class UserController {
         throw { name: "UserVerify" };
       }
     } catch (err) {
+      next(err);
+    }
+  }
+
+  static async googleAuthVerify(req, res, next) {
+    try {
+      const ticket = await client.verifyIdToken({
+        idToken: req.body.idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const userPayload = ticket.getPayload();
+
+      const data = {
+        fullname: `${userPayload.given_name}${userPayload.family_name}`,
+        email: userPayload.email,
+        password: `${userPayload.given_name}branded`,
+        role: "customer",
+        zipCode: "16453",
+        city: "depok",
+        address: "Jalan Raya margonda",
+      };
+
+      const foundUser = await User.findOne({
+        where: {
+          email: userPayload.email,
+        },
+      });
+
+      if (!foundUser) {
+        // should login even email is there?
+        const createUser = await User.create(data);
+
+        const access_token = signToken({
+          id: createUser.id,
+          email: createUser.email,
+          role: createUser.role,
+        });
+
+        const userEmail = createUser.email;
+        const userRole = createUser.role;
+        const userId = createUser.id;
+
+        res.status(200).json({ access_token, userEmail, userRole, userId });
+      } else {
+        const access_token = signToken({
+          id: foundUser.id,
+          email: foundUser.email,
+          role: foundUser.role,
+        });
+
+        const userEmail = foundUser.email;
+        const userRole = foundUser.role;
+        const userId = foundUser.id;
+
+        res.status(200).json({ access_token, userEmail, userRole, userId });
+      }
+    } catch (err) {
+      // console.log(err);
       next(err);
     }
   }
