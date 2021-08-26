@@ -5,12 +5,14 @@ const adminRoute = require('./admin-route')
 const CustController = require('../controllers/user-cust-controller')
 const AdminController = require('../controllers/user-admin-controller')
 const TypeController = require('../controllers/type-controller')
+const Controller = require('../controllers/controller')
 const errorHandling = require('../middleware/errorHandling')
 const authentication = require('../middleware/authentication')
 const {
     onlyAdmin
 } = require('../middleware/authorization')
 
+router.get('/weather', Controller.getWeatherApi)
 router.post('/register', CustController.custRegister)
 router.post('/login', CustController.custLogin)
 router.post('/admin/register', AdminController.adminRegister)
