@@ -14,6 +14,22 @@ function errorHandler(err, req, res, next) {
 		cod = 401
 		messages = "Email/password wrong"
 		break
+
+		case "notfoundstory":
+		cod = 400
+		messages = "No Story with this id found"
+		break
+
+		case "invalid token":
+		cod = 401
+		messages = "You need to login first"
+		break
+
+		case "Page not found":
+		cod = 400
+		messages = "Page not found"
+		break
+
 	}
 
 	res.status(cod).json({messages})

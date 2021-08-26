@@ -10,15 +10,60 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Story.belongsTo(models.User, {foreignKey : 'AuthorId'})
+      Story.hasMany(models.StoryComment, {foreignKey : 'StoryId'})
+      Story.hasMany(models.StoriesLike, {foreignKey : 'StoryId'})
     }
   };
   Story.init({
-    title: DataTypes.STRING,
-    sinopsis: DataTypes.TEXT,
-    story_text: DataTypes.TEXT,
-    cover_image_url: DataTypes.STRING,
-    AuthorId: DataTypes.INTEGER
+    title: {
+      type : DataTypes.STRING,
+      allowNull : false,
+      validate : {
+        notEmpty : {
+          msg : "Title is cannot empty"
+        },
+        notNull : {
+          msg : "Title is cannot empty"
+        }
+      }
+    },
+    sinopsis: {
+      type : DataTypes.TEXT,
+      allowNull : false,
+      validate : {
+        notEmpty : {
+          msg : "Sinopsis is cannot empty"
+        },
+        notNull : {
+          msg : "Sinopsis is cannot empty"
+        }
+      }
+    },
+    story_text: {
+      type : DataTypes.TEXT,
+      allowNull : false,
+    },
+    cover_image_url: {
+      type : DataTypes.STRING,
+      allowNull : false
+    },
+    AuthorId: {
+      type : DataTypes.INTEGER,
+      allowNull : false
+    },
+    tag: {
+      type : DataTypes.STRING,
+      allowNull : false,
+      validate : {
+        notEmpty : {
+          msg : "Story tag is required",
+        },
+        notNull : {
+          msg : "Story tag is required",
+        },
+      }
+    }
   }, {
     sequelize,
     modelName: 'Story',

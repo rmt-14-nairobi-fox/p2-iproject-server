@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      User.hasMany(models.Story, {foreignKey:'AuthorId'})
     }
   };
   User.init({
@@ -71,15 +71,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     profile_picture: {
       type : DataTypes.STRING,
-      // allowNull : false,
-      // validate : {
-      //   notEmpty : {
-      //     msg : "Profile picture cannot empty"
-      //   },
-      //   notNull : {
-      //     msg : "Profile picture cannot empty"
-      //   }
-      // }
     },
     gender : {
       type : DataTypes.STRING,

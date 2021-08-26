@@ -15,7 +15,18 @@ class Controller {
 			})
 
 			if (userCreated) {
-				res.status(201).json(userCreated)
+			const access_token = signToken({
+				id : userCreated.id,
+				name : userCreated.name,
+				email : userCreated.email,
+			})
+			res.status(201).json({
+				id : userCreated.id,
+				name : userCreated.name,
+				email : userCreated.email,
+				access_token
+			})
+
 			}
 		}
 		catch(err){
@@ -37,6 +48,7 @@ class Controller {
 				if (passCheck) {
 					const access_token = signToken({
 						id : findUser.id,
+						name : findUser.name,
 						email : findUser.email,
 					})
 
