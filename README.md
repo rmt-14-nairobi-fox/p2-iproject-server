@@ -381,6 +381,97 @@ _Response 403 Forbidden_
 
 ---
 
+### POST /news/search
+
+> Search news based on searchQuery
+
+**Header**
+
+```
+access_token = <token>
+```
+
+**Body**
+
+```
+searchQuery = <string>
+```
+
+_Response 200 OK_
+
+```JSON
+{
+    "totalArticles": 11209,
+    "articles": [
+        {
+            "title": "Intel Arc Alchemist Gaming GPUs Will Have Baked-In Overclocking Support",
+            "description": "The overclocking interface will be baked right into the driver UI.",
+            "content": "Intel is going all-in with discrete graphics, which was made abundantly clear last week with the announcement of its Arc family of gaming cards . Built on Intel’s Xe-HPG architecture, the first graphics cards to hit the market in Q1 2022 will come fr... [2064 chars]",
+            "url": "https://hothardware.com/news/intel-arc-alchemist-gaming-gpus-will-have-baked-in-overclocking-support",
+            "image": "https://images.hothardware.com/contentimages/newsitem/56062/content/intel_arc_roadmap.jpg",
+            "publishedAt": "2021-08-24T14:35:00Z",
+            "source": {
+                "name": "Hot Hardware",
+                "url": "https://hothardware.com"
+            }
+        },
+        ...
+    ]
+}
+```
+
+_Response 401 Unauthorized_
+
+```JSON
+{
+  "message": "(Invalid token) | (Please login first)"
+}
+```
+
+---
+
+### POST /news/email
+
+> Send all user's saved news to user email
+
+**Header**
+
+```
+access_token = <token>
+```
+
+**Body**
+
+```
+not needed
+```
+
+_Response 200 OK_
+
+```JSON
+{
+    "message": "Email sent"
+}
+```
+
+_Response 401 Unauthorized_
+
+```JSON
+{
+  "message": "(Invalid token) | (Please login first)"
+}
+```
+
+_Response 404 Not Found_
+
+```JSON
+{
+  "message": "You don't have any saved news"
+}
+```
+
+---
+
 ### GET /posts
 
 > List all post from all user
@@ -681,7 +772,7 @@ _Response 200 OK_
 
 ### GET /weather
 
-> Get today's weather for Jakarta
+> Get today's weather based on browser geolocation API
 
 **Header**
 
@@ -740,6 +831,65 @@ _Response 200 OK_
     "id": 1642911,
     "name": "Jakarta",
     "cod": 200
+}
+```
+
+---
+
+### GET /comments
+
+> Get current post comments
+
+**Header**
+
+```
+access_token = <token>
+post_id      = <post id>
+```
+
+**Body**
+
+```
+not needed
+```
+
+_Response 200 OK_
+
+```JSON
+[
+  {
+    "id": 62,
+    "comment": "haha",
+    "post_id": 12,
+    "user_id": 5,
+    "createdAt": "2021-08-26T01:46:02.904Z",
+    "updatedAt": "2021-08-26T01:46:02.904Z",
+    "User": {
+      "name": "Marco Tiger",
+      "imgUrl": "https://lh3.googleusercontent.com/a-/AOh14GifOl0mX7QIP15yGHDLoPFyAHjCmrTRGTSAF-28-Q=s96-c"
+    }
+  },
+  {
+    "id": 16,
+    "comment": "test",
+    "post_id": 12,
+    "user_id": 5,
+    "createdAt": "2021-08-26T01:04:17.191Z",
+    "updatedAt": "2021-08-26T01:04:17.191Z",
+    "User": {
+      "name": "Marco Tiger",
+      "imgUrl": "https://lh3.googleusercontent.com/a-/AOh14GifOl0mX7QIP15yGHDLoPFyAHjCmrTRGTSAF-28-Q=s96-c"
+    }
+  },
+  ...
+]
+```
+
+_Response 400 Bad Request_
+
+```JSON
+{
+  "message": "Please send post ID to fetch comments"
 }
 ```
 

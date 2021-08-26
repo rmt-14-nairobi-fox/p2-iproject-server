@@ -3,7 +3,7 @@ const { Comment, User } = require('../models');
 class Controller {
   static async fetchComments(req, res, next) {
     try {
-      const post_id = req.body.post_id || null;
+      const post_id = req.headers.post_id || null;
 
       if (post_id) {
         const result = await Comment.findAll({
@@ -16,6 +16,7 @@ class Controller {
               attributes: ['name', 'imgUrl'],
             },
           ],
+          order: [['id', 'ASC']],
         });
 
         res.status(200).json(result);

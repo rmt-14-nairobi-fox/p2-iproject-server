@@ -4,6 +4,6 @@ const authentication = require('../middlewares/authentication');
 
 router.use(authentication);
 
-router.post('/', Controller.fetchComments);
+router.get('/', Controller.fetchComments);
 
 module.exports = router;
