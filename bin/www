@@ -1,0 +1,43 @@
+const { server, io } = require('../app');
+const { Comment } = require('../models');
+const { checkToken } = require('../helpers/jwt');
+
+const PORT = process.env.PORT || 3000;
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  socket.on('send_comment', async (payload) => {
+    try {
+      const { id: user_id } = checkToken(payload.access_token);
+      const commentData = {
+        user_id,
+        post_id: payload.post_id,
+        comment: payload.comment,
+      };
+
+      const response = {
+        post_id: payload.post_id,
+        user_name: payload.user_name,
+        user_imgUrl: payload.user_imgUrl,
+        comment: payload.comment,
+      };
+
+      if (payload.comment) {
+        Comment.create(commentData);
+        io.emit('comment_response', response);
+      } else {
+        socket.emit('comment_response', 'error');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  });
+});
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
