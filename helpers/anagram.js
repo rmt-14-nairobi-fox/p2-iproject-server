@@ -9,7 +9,7 @@ const anagram = (word) => {
     countdown({
       method: "GET",
       url: `/${word}`,
-      params: { variance: "0" },
+      params: { variance: "-1" },
       headers: {
         "x-rapidapi-host": "danielthepope-countdown-v1.p.rapidapi.com",
         "x-rapidapi-key": process.env.X_RAPIDAPI_KEY,

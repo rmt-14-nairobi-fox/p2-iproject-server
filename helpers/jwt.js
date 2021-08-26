@@ -7,6 +7,7 @@ const generateToken = (data) => {
 
 const verify = (token) => {
   const decode = jwt.verify(token, process.env.SECRET);
+  return decode;
 };
 
 module.exports = {

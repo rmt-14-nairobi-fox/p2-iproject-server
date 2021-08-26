@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       User.hasMany(models.Score);
+      User.hasMany(models.OnlineUser);
     }
   }
   User.init(
@@ -24,6 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           notNull: {
             msg: "Username cannot be null",
+          },
+          notEmpty: {
+            msg: "Username cannot be empty",
           },
         },
       },
