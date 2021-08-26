@@ -3,6 +3,7 @@ const {comparePassword} = require('../helpers/bcrypt')
 const { jwtSign } = require('../helpers/jwt')
 const {OAuth2Client} = require('google-auth-library');
 const { Op } = require("sequelize");
+const axios = require('axios')
 
 class CustomerController{
     static register(req,res,next){
@@ -180,9 +181,51 @@ class CustomerController{
         })
     }
     static showCategory(req,res,next){
-        Category.findAll({order: [['id', 'ASC']]})
-        .then((data)=>{
+        axios({
+            method:"get",
+            url:"https://www.halodoc.com/api/v1/buy-medicine/categories"
+        })
+        .then(({data})=>{
             res.status(200).json(data)
+        })
+        .catch(err=>{
+            next(err)
+        })
+    }
+    static showCategoryDetail(req,res,next){
+        let category = req.params.name
+        axios({
+            method:"get",
+            url:`https://www.halodoc.com/api/v1/buy-medicine/categories/${category}/products?page=1&size=20`
+        })
+        .then(({data})=>{
+            res.status(200).json(data.result)
+        })
+        .catch(err=>{
+            next(err)
+        })
+    }
+    static showProductDetail(req,res,next){
+        let product = req.params.name
+        axios({
+            method:"get",
+            url:`https://www.halodoc.com/api/v1/buy-medicine/products/detail/${product}`
+        })
+        .then(({data})=>{
+            res.status(200).json(data)
+        })
+        .catch(err=>{
+            next(err)
+        })
+    }
+    static showProductSimilar(req,res,next){
+        let product = req.params.name
+        axios({
+            method:"get",
+            url:`https://www.halodoc.com/api/v1/buy-medicine/products/search/${product}`
+        })
+        .then(({data})=>{
+            res.status(200).json(data.result)
         })
         .catch(err=>{
             next(err)
@@ -191,7 +234,7 @@ class CustomerController{
     static showFavorites(req,res,next){
         Favorite.findAll({
             where : {UserId:req.user.id},
-            include: [ Drug, User ]
+            include: [ User ]
         })
         .then((data)=>{
             res.status(200).json(data)
@@ -203,8 +246,13 @@ class CustomerController{
     static addFavorite(req,res,next){
         let newfavorite = {
             UserId:req.user.id,
-            DrugId:req.params.id
+            image_url:req.body.image_url,
+            nameDrug:req.body.nameDrug,
+            sellingUnitDrug: req.body.sellingUnitDrug,
+            minPriceDrug: req.body.minPriceDrug,
+            BasePriceDrug: req.body.BasePriceDrug
         }
+        console.log(newfavorite);
         Favorite.create(newfavorite)
         .then(data=>{
             res.status(201).json(data)
