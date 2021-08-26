@@ -49,15 +49,23 @@ function priceWatch() {
             include: ['Coin', 'User']
           })
           .then(watchersResult => {
+            // console.log(watchersResult.Coin);
             watchersResult.forEach(watcher => {
-              if(watcher.minPrice <= watcher.Coin.price && watcher.minPrice !== 0){
+              if(watcher.minPrice >= watcher.Coin.price && watcher.minPrice !== 0){
+                console.log(watcher.maxPrice);
+                console.log(watcher.minPrice);
+                console.log(watcher.Coin.price);
                 sendEmailMinPrice(watcher)
                 watcher.minPrice = 0
-              }else if(watcher.maxPrice >= watcher.Coin.price && watcher.minPrice !== 0){
+              }else if(watcher.maxPrice <= watcher.Coin.price && watcher.maxPrice !== 0){
                 sendEmailMaxPrice(watcher)
                 watcher.maxPrice = 0
               }
               Watcher.update({minPrice: watcher.minPrice, maxPrice: watcher.maxPrice}, {where: {id: watcher.id}})
+              .then(result => {
+                console.log('watcher has been updated');
+              })
+              .catch(err=> console.log(err))
             });
           })
       });

@@ -1,7 +1,7 @@
 const axios = require('axios').default
 
 function fetchTechnicalAnalysis(coinCode) {
-  let TAapiKey = 'FBT2CTIJ4AKJLBEOPR6GTALMJWV2BW4NU7GV33XW2WIWIS5H'
+  let TAapiKey = process.env.TECHNICAL_ANALYSIS_KEY
   return axios({
     method: 'GET',
     url: `https://technical-analysis-api.com/api/v1/analysis/${coinCode}?apiKey=${TAapiKey}`

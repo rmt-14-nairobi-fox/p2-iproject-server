@@ -11,16 +11,24 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Coin.hasMany(models.Watcher)
+      Coin.belongsToMany(models.User, {through: models.Watcher})
     }
   };
   Coin.init({
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique:{
+        msg: `coin name already exists`
+      }
     },
     symbol: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: {
+        msg: 'Coin symbol already used'
+      }
     },
     price: {
       type: DataTypes.FLOAT,
