@@ -13,14 +13,17 @@ not need
 _Request Body_
 
 ```
-google account data
+{
+    idToken: "string"
+}
 ```
 
 _Response (200)_
 
 ```
 {
-    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJhZGFtNEBtYWlsLmNvbSIsImlhdCI6MTYyODAzNDQzNH0._b9qE5FYwDBMSR7Ln0_WGiLrWVBOPUk3EzG-a_on1y0"
+    access_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJhZGFtNEBtYWlsLmNvbSIsImlhdCI6MTYyODAzNDQzNH0._b9qE5FYwDBMSR7Ln0_WGiLrWVBOPUk3EzG-a_on1y0"
+    email: "adam@mail.com"
 }
 ```
 
@@ -141,7 +144,7 @@ _Response (500 - Bad Request)_
 _Request Header_
 
 ```
-access_token = <token>
+access_token =  "string"
 ```
 
 _Request Body_
@@ -243,7 +246,7 @@ _Response (500 - Bad Request)_
 _Request Header_
 
 ```
-access_token = <token>
+access_token =  "string"
 ```
 
 _Request Body_
@@ -343,7 +346,7 @@ _Response (500 - Bad Request)_
 _Request Header_
 
 ```
-access_token = <token>
+access_token =  "string"
 ```
 
 _Request Body_
@@ -417,7 +420,7 @@ _Response (500 - Bad Request)_
 _Request Header_
 
 ```
-access_token = <token>
+access_token =  "string"
 ```
 
 _Request Body_
@@ -447,9 +450,6 @@ _Response (200)_
     "UserId": 2,
     "createdAt": "2021-08-25T11:26:26.130Z",
     "updatedAt": "2021-08-25T11:26:26.130Z",
-    "User": {
-        "id": 2,
-        "email": "adam@mail.com"
 }
 
 
@@ -502,7 +502,7 @@ _Response (500 - Bad Request)_
 _Request Header_
 
 ```
-access_token = <token>
+access_token = "string"
 ```
 
 _Request Body_
