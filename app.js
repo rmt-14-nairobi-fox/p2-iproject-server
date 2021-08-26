@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 const express = require('express')
 const cors = require("cors")
-const router = require('./routes/index')
+const router = require('./routes')
 const app = express()
 const PORT = process.env.PORT || 3000
 

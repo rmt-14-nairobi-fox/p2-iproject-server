@@ -13,7 +13,7 @@ class ControllerUser {
       res.status(201).json({ id: result.id, email: result.email, role: result.role, access_token })
       // console.log(res);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       next(err)
     }
   }
