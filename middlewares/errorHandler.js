@@ -22,9 +22,19 @@ const errorHandler = (err, req, res, next) => {
             code = 401
             break;
         
+        case 'JsonWebTokenError':
+            message.push('You must Logi  First')
+            code = 401
+            break;
+        
+        case 'BadWord':
+            message.push(err.message)
+            code = 400
+            break;
+        
         default:
             console.log(err);
-            message = err.message || 'Internal Server error'
+            message.push(err.message || 'Internal Server error')
             code = 500
             break;
     }
