@@ -34,6 +34,10 @@ function errorHandler(err, req, res, next) {
 		messages = "Page not found"
 		break
 
+		default:
+		cod = 400
+		messages = err.name
+
 	}
 
 	res.status(cod).json({messages})

@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       Story.belongsTo(models.User, {foreignKey : 'AuthorId'})
       Story.hasMany(models.StoryComment, {foreignKey : 'StoryId'})
       Story.hasMany(models.StoriesLike, {foreignKey : 'StoryId'})
+      Story.belongsToMany(models.User, {as : 'UserComment', through : models.StoryComment})
     }
   };
   Story.init({

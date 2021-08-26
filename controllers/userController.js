@@ -52,7 +52,12 @@ class Controller {
 						email : findUser.email,
 					})
 
-					res.status(200).json({access_token})
+					res.status(200).json({
+						id : findUser.id,
+						name : findUser.name,
+						email : findUser.email,
+						access_token
+					})
 				}else{
 					throw ({message : 'unauthorized'})
 				}

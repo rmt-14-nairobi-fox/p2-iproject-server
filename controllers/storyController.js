@@ -46,7 +46,10 @@ class Controller{
 		try{
 			const {id} = req.params
 			const result = await Story.findByPk(id, {
-				include : [StoryComment,StoriesLike]
+				include : [StoryComment,StoriesLike, {
+					model : User,
+					as : 'UserComment'
+				}]
 			})
 			if (result) {
 				res.status(200).json(result)
@@ -63,7 +66,6 @@ class Controller{
 		console.log(req.body);
 		try{
 			const {id} = req.user
-			console.log(req.body);
 			const {title, sinopsis, story_text, cover_image_url, AuthorId, tag} = req.body
 			const result = await Story.create({
 				title,
@@ -79,6 +81,22 @@ class Controller{
 		catch(err){
 			console.log(err);
 			res.send(err)
+		}
+	}
+
+	static async deleteStory(req, res, next){
+		try{
+			const {id} = req.params
+			const result = await Story.destroy({
+				where : {
+					id
+				},
+				force : true
+			})
+			res.status(200).json(result)
+		}
+		catch(err){
+			next(err)
 		}
 	}
 
@@ -129,6 +147,42 @@ class Controller{
 				}
 			})
 
+			res.status(200).json(result)
+		}
+		catch(err){
+			next(err)
+		}
+	}
+
+	static async getStoryByAuthor(req, res, next){
+		try{
+			const {id} = req.user
+			const result = await Story.findAndCountAll({
+				where : {
+					AuthorId : id
+				}
+			})
+			res.status(200).json(result)
+		}
+		catch(err){
+			next(err)
+		}
+	}
+
+	static async editStoryText(req, res, next){
+		try{
+			const {id} = req.params
+			const {story_text} = req.body
+			console.log(story_text, id);
+			const result = await Story.update(
+				{
+					story_text
+				},{
+					where : {
+						id
+					},
+				})
+			
 			res.status(200).json(result)
 		}
 		catch(err){
