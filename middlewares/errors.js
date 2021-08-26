@@ -37,7 +37,7 @@ async function errorHandler(err, req, res, next) {
     code = 401;
     message = { message: ["You do not have the access"] };
   } else if (err.name === "AlreadyAdded") {
-    code = 409;
+    code = 400;
     message = { message: ["This accommodation is already on your bookmarks"] };
   }
 
