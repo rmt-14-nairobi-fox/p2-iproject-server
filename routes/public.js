@@ -10,6 +10,8 @@ router.post("/register", UserController.registerPublic);
 
 router.post("/login", UserController.loginPublic);
 
+router.post("/googleAuth", UserController.googleAuthVerify);
+
 // !SAVED
 router.get(
   "/savedAccommodations",

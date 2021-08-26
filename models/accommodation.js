@@ -166,24 +166,24 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Accommodation.beforeUpdate((data, opt) => {
+  Accommodation.beforeUpdate(async (data, opt) => {
     if (opt.method === "PATCH" && data.status === "inactive") {
-      sequelize.models.SaveAccommodation.findAll({
-        where: {
-          UserId: +data.AuthorId,
-        },
-      })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // await sequelize.models.SaveAccommodation.destroy({
+      // sequelize.models.SaveAccommodation.findAll({
       //   where: {
-      //     AccommodationId: +data.id,
+      //     UserId: +data.AuthorId,
       //   },
-      // });
+      // })
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      await sequelize.models.SaveAccommodation.destroy({
+        where: {
+          AccommodationId: +data.id,
+        },
+      });
 
       // const onlyName = foundUser.map((el) => {
       //   return sequelize.models.User.findByPk(+el.id)
