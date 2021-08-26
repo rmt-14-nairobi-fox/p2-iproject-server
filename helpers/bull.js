@@ -6,7 +6,15 @@ const { User } = require("../models");
 
 const transporter = require("./sendMail");
 
-const sendEmailQueue = new Queue("send email", "redis://127.0.0.1:6379");
+// const sendEmailQueue = new Queue("send email", "redis://127.0.0.1:6379");
+const sendEmailQueue = new Queue("send email", {
+  redis: {
+    port: 15339,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASS,
+  },
+});
+
 const { router, setQueues, replaceQueues, addQueue, removeQueue } =
   createBullBoard([new BullAdapter(sendEmailQueue)]);
 

@@ -5,7 +5,7 @@ module.exports = geoLocation = async (req, res, next) => {
     if (!req.body.ip) throw { code: 400, name: "No Ip" };
     const ip = req.body.ip;
     const data = await axios.get(
-      `https://ipgeolocation.abstractapi.com/v1/?api_key=0e07a9ff5dbc44019a9f926aa9432a1a&ip_address=${ip}`
+      `https://ipgeolocation.abstractapi.com/v1/?api_key=${process.env.GEO_LOC_API_KEY}&ip_address=${ip}`
     );
 
     const { latitude, longitude } = data.data;
