@@ -821,9 +821,9 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
-### GET /user
+### GET /weather
 
-> Get current user info
+> Get current weather info from farm location
 
 _Request Header_
 ```
@@ -866,6 +866,35 @@ _Response (200 - OK)_
     "gust_mph": 4.7,
     "gust_kph": 7.6
 }
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": [
+    "Internal server error"
+    ]
+}
+```
+
+---
+### GET /email
+
+> sending email from admin when requeast already process
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+"250 2.0.0 OK  1629952427 j16sm1174086pfc.70 - gsmtp"
 ```
 
 _Response (500 - Internal Server Error)_
