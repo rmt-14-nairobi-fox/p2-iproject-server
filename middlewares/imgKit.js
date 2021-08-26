@@ -18,7 +18,7 @@ async function imgKitCreate(req, res, next) {
     try {
       //   console.log(req.file);
       if (typeFile === ".jpg" || typeFile === ".png" || typeFile === ".jpeg") {
-        if (req.file.size < 255000) {
+        if (req.file.size < 1000000) {
           let encodePrivateKey = Buffer.from(
             `${process.env.IMGKIT_PRIVATE_KEY}:`,
             "utf-8"
