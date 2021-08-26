@@ -381,9 +381,6 @@ _Response (200)_
     "UserId": 2,
     "createdAt": "2021-08-25T11:26:26.130Z",
     "updatedAt": "2021-08-25T11:26:26.130Z",
-    "User": {
-        "id": 2,
-        "email": "adam@mail.com"
 }
 
 
