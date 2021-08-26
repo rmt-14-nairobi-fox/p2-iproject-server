@@ -821,3 +821,60 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
+### GET /user
+
+> Get current user info
+
+_Request Header_
+```
+not needed
+```
+
+_Request Body_
+```
+not needed
+```
+
+_Response (200 - OK)_
+```
+{
+    "last_updated_epoch": 1629949500,
+    "last_updated": "2021-08-26 10:45",
+    "temp_c": 32,
+    "temp_f": 89.6,
+    "is_day": 1,
+    "condition": {
+        "text": "Partly cloudy",
+        "icon": "//cdn.weatherapi.com/weather/64x64/day/116.png",
+        "code": 1003
+    },
+    "wind_mph": 4.3,
+    "wind_kph": 6.8,
+    "wind_degree": 150,
+    "wind_dir": "SSE",
+    "pressure_mb": 1010,
+    "pressure_in": 29.83,
+    "precip_mm": 0,
+    "precip_in": 0,
+    "humidity": 49,
+    "cloud": 25,
+    "feelslike_c": 42.1,
+    "feelslike_f": 107.7,
+    "vis_km": 6,
+    "vis_miles": 3,
+    "uv": 7,
+    "gust_mph": 4.7,
+    "gust_kph": 7.6
+}
+```
+
+_Response (500 - Internal Server Error)_
+```
+{
+  "message": [
+    "Internal server error"
+    ]
+}
+```
+
+---
