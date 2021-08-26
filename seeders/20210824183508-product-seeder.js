@@ -69,6 +69,25 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          name: "Stark Builder",
+          ProviderId: 7,
+          price: 15000000,
+          ServiceId: 8,
+          detail:
+            "Bisa bikin rumahmu jadi transformers! Ayo bangun masa depan yang cerah dan terang benderang bersama Stark Builder!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          name: "Super-Tire",
+          ProviderId: 8,
+          price: 150000,
+          ServiceId: 7,
+          detail: "Tambal sekali bolong berkali-kali!",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       {}
     );

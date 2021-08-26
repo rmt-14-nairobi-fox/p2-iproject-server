@@ -33,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       tokenPayment: {
         type: DataTypes.STRING,
       },
+      codeTransaction: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,

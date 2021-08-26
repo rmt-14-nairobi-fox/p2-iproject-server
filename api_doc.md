@@ -415,12 +415,8 @@ _Request Header_
 _Response (200)_
 
 ```
-_Response (200)_
-
-```
-
 {
-transactionToken: "29f0a0bf-4ad5-4467-a634-a2ce074fc8a5"
+  "transactionToken": "29f0a0bf-4ad5-4467-a634-a2ce074fc8a5"
 }
 
 ```
@@ -430,7 +426,7 @@ _Response (401 - Unauthorized)_
 ```
 
 {
-"message": "You must Log In first!"
+  "message": "You must Log In first!"
 }
 
 ```
@@ -440,17 +436,16 @@ _Response (500 - Internal Server Error)_
 ```
 
 {
-"message": "Internal Server Error"
+  "message": "Internal Server Error"
 }
 
-````
-
+```
 
 #### Handle Notification from midTrans
 
 ```http
   POST /orders/notif
-````
+```
 
 _Request Body_
 | Parameter | Type | Description |
@@ -458,23 +453,12 @@ _Request Body_
 | `order_id` | `string` | **Required**. |
 | `status_code` | `string` | **Required**. |
 | `signature_key` | `string` | **Required**. |
-| `signature_key` | `string` | **Required**. |
 
 _Response (200)_
 
 ```
 {
     message: "payment success"
-}
-
-```
-
-_Response (401 - Unauthorized)_
-
-```
-
-{
-"message": "You must Log In first!"
 }
 
 ```
@@ -504,7 +488,7 @@ _Response (200)_
 
 ```
 {
-    message: "payment canceled"
+  "message": "payment canceled"
 }
 
 ```
@@ -514,7 +498,7 @@ _Response (401 - Unauthorized)_
 ```
 
 {
-"message": "You must Log In first!"
+  "message": "You must Log In first!"
 }
 
 ```
@@ -524,7 +508,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 {
-"message": "Internal Server Error"
+  "message": "Internal Server Error"
 }
 
 ```

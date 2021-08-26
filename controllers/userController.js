@@ -69,14 +69,15 @@ class UserController {
         const user = ticket.getPayload();
         const email = user.email;
         const payload = {
-          fullName: user.given_name,
-          username: user.given_name + user.family_name,
+          fullName: user.given_name + " " + user.family_name,
+          username: user.given_name,
           email: user.email,
           password: user.sub,
           phoneNumber: user.sub,
           address: "Jl. Kanan no 13, Pringsewu, Lampung, Indonesia. 35372",
           imgUser: user.picture,
         };
+        console.log(payload);
         const createUser = await User.findOrCreate({
           where: { email: email },
           defaults: payload,

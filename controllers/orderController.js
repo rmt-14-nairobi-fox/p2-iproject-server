@@ -45,20 +45,26 @@ class OrderController {
   }
   static async notifPayment(req, res, next) {
     try {
-      let order_id = +req.body.order_id;
+      let order_id = req.body.order_id;
       let status_code = req.body.status_code;
       let myServerKey = process.env.MIDTRANS_SERVER_KEY;
       const signatureMidTrans = req.body.signature_key;
-
-      const findOrder = await Order.findByPk(order_id);
-
+      console.log("================");
+      console.log(order_id);
+      const findOrder = await Order.findOne({
+        where: {
+          codeTransaction: order_id,
+        },
+      });
+      console.log("==========================");
+      console.log(findOrder);
       if (!findOrder) {
         throw { name: "paymentFailed" };
       } else {
-        const idFromDb = findOrder.id.toString();
+        const codeTrans = findOrder.codeTransaction.toString();
         const grossFromDb = findOrder.totalPrice.toString() + ".00";
         const hashSignature = sha512(
-          idFromDb + status_code + grossFromDb + myServerKey
+          codeTrans + status_code + grossFromDb + myServerKey
         );
 
         let payloadNewOrder;
@@ -82,7 +88,7 @@ class OrderController {
 
           const updateOrder = await Order.update(payloadNewOrder, {
             where: {
-              id: idFromDb,
+              id: findOrder.id,
             },
           });
         }
@@ -118,6 +124,7 @@ class OrderController {
         CustomerId: req.user.id,
         isPayment: "PENDING",
         totalPrice: +totalPrice,
+        codeTransaction: new Date().getTime(),
       };
 
       const createOrder = await Order.create(payloadOrder);
@@ -134,18 +141,18 @@ class OrderController {
       const { custDetails } = req.body;
       let parameter = {
         transaction_details: {
-          order_id: createOrder.id,
+          order_id: createOrder.codeTransaction,
           gross_amount: +totalPrice,
         },
         credit_card: {
           secure: true,
         },
         customer_details: {
-          customer_name: custDetails.custName,
-          customer_email: custDetails.email,
-          customer_address: custDetails.address,
-          customer_phone: custDetails.phoneNumber,
-          customer_date_service: custDetails.dateService,
+          first_name: custDetails.custName,
+          email: custDetails.email,
+          shipping_address: custDetails.address,
+          phone: custDetails.phoneNumber,
+          date_services: custDetails.dateService,
         },
       };
       const transaction = await snap.createTransaction(parameter);
@@ -167,33 +174,3 @@ class OrderController {
 }
 
 module.exports = OrderController;
-
-// { totalPrice: 170000,
-//   orderDetails:
-//    [ { id: 15,
-//        name: 'The Rock Lightning',
-//        ProviderId: 7,
-//        price: 150000,
-//        ServiceId: 10,
-//        detail:
-//         'Selain bisa potong rambut juga bisa potong arus listrik rumahmu',
-//        createdAt: '2021-08-25T12:29:57.008Z',
-//        updatedAt: '2021-08-25T12:29:57.008Z',
-//        Service: [Object],
-//        User: [Object] },
-//      { id: 13,
-//        name: 'Messi Gardener',
-//        ProviderId: 5,
-//        price: 20000,
-//        ServiceId: 11,
-//        detail: 'Bersihkan kebun tanpa sisa',
-//        createdAt: '2021-08-25T12:29:57.008Z',
-//        updatedAt: '2021-08-25T12:29:57.008Z',
-//        Service: [Object],
-//        User: [Object] } ],
-//   custDetails:
-//    { custName: 'customerregist',
-//      email: 'cust3@mail.com',
-//      address: 'Jl. Singgasana no 69.  Pringsewu, Lampung, Indonesia.',
-//      phoneNumber: '+6282181080180',
-//      dateService: '2021-08-28' } }

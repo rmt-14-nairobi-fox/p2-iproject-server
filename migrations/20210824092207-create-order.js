@@ -28,6 +28,9 @@ module.exports = {
       tokenPayment: {
         type: Sequelize.STRING,
       },
+      codeTransaction: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

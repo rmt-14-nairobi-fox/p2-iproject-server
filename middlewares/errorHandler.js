@@ -58,7 +58,7 @@ function errorHandler(err, req, res, next) {
       break;
   }
 
-  res.status(code).json({ message });
+  res.status(code).json(message);
 }
 
 module.exports = errorHandler;
