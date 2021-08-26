@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Favorite.belongsTo(models.User)
-      Favorite.belongsTo(models.Drug)
     }
   };
   Favorite.init({
@@ -22,8 +21,12 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey:true,
       type:DataTypes.INTEGER
     },
-    DrugId: DataTypes.INTEGER,
-    UserId: DataTypes.INTEGER
+    UserId: DataTypes.INTEGER,
+    image_url: DataTypes.STRING,
+    nameDrug:  DataTypes.STRING,
+    sellingUnitDrug: DataTypes.STRING,
+    minPriceDrug: DataTypes.INTEGER,
+    BasePriceDrug: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Favorite',

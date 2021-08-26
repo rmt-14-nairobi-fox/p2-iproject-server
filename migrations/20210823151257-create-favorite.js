@@ -8,15 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      DrugId: {
-        type: Sequelize.INTEGER,
-        references:{
-          model:"Drugs",
-          key:"id"
-        },
-        onUpdate:"cascade",
-        onDelete:"cascade"
-      },
       UserId: {
         type: Sequelize.INTEGER,
         references:{
@@ -25,6 +16,21 @@ module.exports = {
         },
         onUpdate:"cascade",
         onDelete:"cascade"
+      },
+      image_url: {
+        type: Sequelize.STRING
+      },
+      nameDrug: {
+        type: Sequelize.STRING
+      },
+      sellingUnitDrug: {
+        type: Sequelize.STRING
+      },
+      minPriceDrug: {
+        type: Sequelize.INTEGER
+      },
+      BasePriceDrug: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
