@@ -12,7 +12,7 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-    let data = JSON.parse(fs.readFileSync('./Coins.json',"utf-8"))
+    let data = JSON.parse(fs.readFileSync('./8coins.json',"utf-8"))
     data.forEach(coin => {
       coin.createdAt = new Date()
       coin.updatedAt = new Date()
