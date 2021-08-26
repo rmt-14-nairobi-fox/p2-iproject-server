@@ -18,7 +18,7 @@ class AdminController {
                 password
             } = req.body
 
-            const phone = 12345;
+            const phone = process.env.ADMIN_NUMBER;
 
             const result = await User.create({
                 email,
