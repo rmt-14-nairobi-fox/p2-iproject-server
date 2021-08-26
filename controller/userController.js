@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const { checkPass } = require("../helper/bycript");
 const { jwtSign } = require("../helper/jwt");
 const { OAuth2Client } = require("google-auth-library");
@@ -53,11 +56,11 @@ class UserController {
       const result = await User.findOne({ where: { email: email } });
       if (result) {
         const access_token = jwtSign({ id: result.id, email: result.email, username: result.username });
-        res.status(200).json({ access_token });
+        res.status(200).json({ access_token, email: result.email });
       } else {
         const create = await User.create({ email: data.email, password: `${data.email}+${data.password}`, username: name });
         const access_token = jwtSign({ id: create.id, email: create.email, role: create.role });
-        res.status(200).json({ access_token });
+        res.status(200).json({ access_token, email: result.email });
       }
     } catch (err) {
       next(err);

@@ -65,7 +65,6 @@ class reviewController {
           review: review,
           recomendation: recomendation,
         };
-        console.log(payload);
         const result = await Review.update(payload, { where: { id: id }, returning: true });
         res.status(200).json(result[1][0]);
       } else {
