@@ -22,6 +22,16 @@ const errorHandler = (err, req, res, next) => {
             code = 401
             break;
         
+        case 'NotFound':
+            message.push(err.message)
+            code = 404
+            break;
+        
+        case 'Forbidden':
+            message.push(err.message)
+            code = 403
+            break;
+        
         case 'JsonWebTokenError':
             message.push('You must Logi  First')
             code = 401
