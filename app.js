@@ -12,7 +12,7 @@ const server = http.createServer(app);
 const { Server } = require('socket.io');
 const io = new Server(server, {
   cors: true,
-  origins: ['http://localhost:8080'],
+  origins: ['https://newromantimes.web.app'],
 });
 
 app.use(cors());
