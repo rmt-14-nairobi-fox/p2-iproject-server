@@ -6,6 +6,10 @@ class PublicController {
             const listP = await Petition.findAll({
                 where: {
                     status: 'published'
+                },
+                include: {
+                    model: User,
+                    attributes: ['username']
                 }
             })
 
