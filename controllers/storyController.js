@@ -46,7 +46,7 @@ class Controller{
 		try{
 			const {id} = req.params
 			const result = await Story.findByPk(id, {
-				include : [StoryComment,StoriesLike, {
+				include : [StoryComment,User,StoriesLike, {
 					model : User,
 					as : 'UserComment'
 				}]
