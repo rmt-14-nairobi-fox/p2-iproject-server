@@ -33,7 +33,6 @@ class SignController {
 
                 //nodemailer kirim email ke pembuat petisi kalo udah selesai petisinya
                 const result = await sendMail({ email, title })
-                console.log(result);
             }
 
             res.status(201).json({
