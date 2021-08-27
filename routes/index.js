@@ -12,8 +12,8 @@ const {
     onlyAdmin
 } = require('../middleware/authorization')
 
-router.get('/weather', Controller.getWeatherApi)
-router.get('/email', Controller.sendEmail)
+router.post('/weather', Controller.getWeatherApi)
+router.post('/email', Controller.sendEmail)
 router.post('/register', CustController.custRegister)
 router.post('/login', CustController.custLogin)
 router.post('/admin/register', AdminController.adminRegister)
