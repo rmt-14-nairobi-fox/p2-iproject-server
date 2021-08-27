@@ -154,11 +154,12 @@ class FarmController {
         try {
             const formId = req.body.formId;
             const farmId = req.params.farmId;
+            console.log(formId, farmId);
             const {
                 email
             } = req.user;
 
-            await Type.destroy({
+            await Farm.destroy({
                 where: {
                     id: farmId
                 },

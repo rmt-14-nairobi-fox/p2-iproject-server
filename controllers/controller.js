@@ -35,7 +35,8 @@ class Controller {
     static sendEmail(req, res, next) {
         try {
             const {
-                email
+                email,
+                message
             } = req.body;
 
             const emailSender = process.env.EMAIL;
@@ -55,7 +56,7 @@ class Controller {
                 from: emailSender,
                 to: email,
                 subject: 'info from Kebunku admin',
-                text: 'your request already process'
+                text: message
             };
 
             transporter.sendMail(mailOptions, (err, info) => {
