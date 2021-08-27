@@ -1,4 +1,5 @@
 const { Petition, Sign } = require('../models');
+const { sendMail } = require('../helpers/sendMail');
 
 class SignController {
     static async addSign(req, res, next) {
@@ -20,6 +21,8 @@ class SignController {
             let maxCount = inc[0][0][0].maxCount
 
             if (signCount === maxCount) {
+                let { email, title } = req.petition
+
                 await Petition.update({
                     status: 'archived'
                 }, {
@@ -29,6 +32,7 @@ class SignController {
                 })
 
                 //nodemailer kirim email ke pembuat petisi kalo udah selesai petisinya
+                const result = await sendMail({ email, title })
             }
 
             res.status(201).json({
