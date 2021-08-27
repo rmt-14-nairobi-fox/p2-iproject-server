@@ -3,7 +3,7 @@ function errorHandler(err, req, res, next) {
 	console.log(err.name);
 	let cod = 500
 	let messages = 'Internal Server Error'
-
+	console.log();
 	if (err.name === "SequelizeValidationError") {
 		cod = 400
 		messages = err.errors.map(e => e.message)
@@ -34,9 +34,9 @@ function errorHandler(err, req, res, next) {
 		messages = "Page not found"
 		break
 
-		default:
-		cod = 400
-		messages = err.name
+		// default:
+		// cod = 400
+		// messages = err.name
 
 	}
 

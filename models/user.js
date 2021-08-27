@@ -77,10 +77,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull : false,
       validate : {
         notEmpty : {
-          msg : "Profile picture cannot empty"
+          msg : "Gender cannot empty"
         },
         notNull : {
-          msg : "Profile picture cannot empty"
+          msg : "Gender cannot empty"
         }        
       }
     }
