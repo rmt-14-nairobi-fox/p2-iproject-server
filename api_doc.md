@@ -821,7 +821,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
-### GET /weather
+### POST /weather
 
 > Get current weather info from farm location
 
@@ -878,7 +878,7 @@ _Response (500 - Internal Server Error)_
 ```
 
 ---
-### GET /email
+### POST /email
 
 > sending email from admin when requeast already process
 
