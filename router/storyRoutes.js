@@ -5,6 +5,7 @@ const { authentication } = require('./../middlewares/auth')
 router.get('/', Controller.getAllStories)
 router.get('/searchbytag', Controller.storiesPopulateTag)
 router.get('/searchbyfilter', Controller.resultSearch)
+router.get('/random', Controller.getRandom)
 // router.get('/seecomments', Controller.getComment)/*/
 
 /*WITH AUTH*/

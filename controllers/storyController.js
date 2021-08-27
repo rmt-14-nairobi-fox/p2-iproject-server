@@ -189,6 +189,18 @@ class Controller{
 			next(err)
 		}
 	}
+
+	static async getRandom(req, res, next){
+		try{
+			const alls = await Story.findAndCountAll()
+			const numb = Math.floor(Math.random() * alls.count) ;
+			const result = alls.rows[numb]
+			res.status(200).json({choice : result})
+		}
+		catch(err){
+			next(err)
+		}
+	}
 }
 
 module.exports = Controller
