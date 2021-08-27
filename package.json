@@ -1,0 +1,43 @@
+{
+  "name": "p2-iproject-server",
+  "version": "1.0.0",
+  "description": "Individual Portfolio Server",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development npx nodemon app.js",
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://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@github.com/RijalArul/p2-iproject-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RijalArul/p2-iproject-server/issues"
+  },
+  "homepage": "https://github.com/RijalArul/p2-iproject-server#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "form-data": "^4.0.0",
+    "github-oauth-express": "^1.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.3",
+    "passport": "^0.4.1",
+    "passport-linkedin-oauth2": "^2.0.0",
+    "pg": "^8.7.1",
+    "sequelize": "^6.6.5"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12",
+    "sequelize-cli": "^6.2.0"
+  }
+}
