@@ -1,4 +1,4 @@
-# CMS App Career Portal Server
+# RAPOOT Server
 Rapoot is a website to help teachers assign score to their students and make easier for students to see their score. This app has : 
 * RESTful endpoint for asset's CRUD operation
 * RESTful endpoint for Login and Register operation
