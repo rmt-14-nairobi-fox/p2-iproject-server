@@ -89,8 +89,13 @@ class Controller {
                 role: Employee
             }
 
+
             const createEmployee = await User.create(form);
-            res.status(201).json(createEmployee);
+
+            if(createEmployee) {
+                const token = signToken({id: createEmployee.id, email: form.email, role: form.role})
+                res.status(201).json(token);
+            }
         } catch (err) {
             // console.log(err)
             if (err.name === 'SequelizeValidationError') {

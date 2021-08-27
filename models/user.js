@@ -50,10 +50,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       },
-      unique: {
-        args: true,
-        msg: 'Password already exists'
-      }
     },
     role: {
       type: DataTypes.STRING,
