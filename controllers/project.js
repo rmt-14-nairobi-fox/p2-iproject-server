@@ -30,7 +30,7 @@ class Controller {
 
         } catch (err) {
             if (err.name === 'You cant access ') {
-                res.status(401).json({
+                res.status(403).json({
                     msg: 'You cant access '
                 })
             } else if (err.name === 'SequelizeValidationError') {
@@ -174,7 +174,7 @@ class Controller {
             }
         } catch (err) {
             if (err.name === 'You dont have access') {
-                res.status(404).json({
+                res.status(403).json({
                     msg: 'You dont have access'
                 })
             } else {
